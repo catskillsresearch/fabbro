@@ -1,0 +1,17 @@
+name = "BSinMeasurementTheory"
+version = "0.1.0"
+keywords = ["measurement-theory", "scott-1964", "lean4"]
+defaultTargets = ["BSinMeasurementTheory"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.34.0-rc1"
+
+[[lean_lib]]
+name = "BSinMeasurementTheory"
+globs = ["BSinMeasurementTheory", "BSinMeasurementTheory.+"]
