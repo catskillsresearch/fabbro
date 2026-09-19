@@ -31,12 +31,17 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 
-% Display-style level-4 headings, numbered 3.1.2.a rather than 3.1.2.1 (a).
+% Level 4 is alphabetic (3.1.2.a); level 5 is arabic under that (3.1.2.b.1).
 \renewcommand{\theparagraph}{\thesubsubsection.\alph{paragraph}}
+\renewcommand{\thesubparagraph}{\theparagraph.\arabic{subparagraph}}
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
   {1.25ex \@plus 1ex \@minus .2ex}%
   {0.6ex \@plus .1ex}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+  {1.0ex \@plus .8ex \@minus .2ex}%
+  {0.4ex \@plus .1ex}%
   {\normalfont\normalsize\bfseries}}
 \makeatother
 

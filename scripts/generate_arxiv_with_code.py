@@ -410,13 +410,9 @@ def ensure_blank_before_headings(text: str) -> str:
 
 
 def flatten_deep_headings(text: str) -> str:
-    """Six-hash headings become bold run-ins. Five-hash headings are
-    kept so course `### (a)` parts survive as level-4 paragraphs."""
-
-    def repl(match: re.Match[str]) -> str:
-        return f"**{match.group(1).strip()}**\n\n"
-
-    return re.sub(r"^#{6}[ \t]+(.+)$", repl, text, flags=re.MULTILINE)
+    """Course `####` steps become level-5 subparagraphs (3.1.2.b.1).
+    Nothing at that depth is flattened anymore."""
+    return text
 
 
 def strip_horizontal_rules(text: str) -> str:
