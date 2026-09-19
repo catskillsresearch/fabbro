@@ -1,4 +1,5 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Finset.Basic
@@ -7,12 +8,14 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21321.ScottPair
+import BSinMeasurementTheory.Course21321.Theorem11
 
 namespace Course21321
 
 noncomputable section
 
-/-- Kraft–Pratt–Seidenberg difference vectors in `ℝ⁵`. -/
+/-- Kraft–Pratt–Seidenberg difference vectors in `ℝ⁵`. These are data, not a
+new class: they assemble into a particular `ScottPair` below. -/
 def y1 : Fin 5 → ℝ := ![-1, -1, 1, 1, 0]
 def y2 : Fin 5 → ℝ := ![-1, 1, -1, 0, 1]
 def y3 : Fin 5 → ℝ := ![1, -1, -1, 1, 0]
@@ -22,30 +25,41 @@ theorem kraft_sum_zero : y1 + y2 + y3 + y4 = 0 := by
   ext i
   fin_cases i <;> norm_num [y1, y2, y3, y4]
 
-/-- The comparative-probability pair whose `Y` is the four Kraft vectors. -/
+/-- A concrete Scott pair — an inhabitant, like a particular monoid, not a
+new typeclass. -/
 def KraftPair : ScottPair ℝ (Fin 5 → ℝ) where
   X := ∅
   Y := {y1, y2, y3, y4}
 
-theorem no_strictly_positive_functional (f : (Fin 5 → ℝ) →ₗ[ℝ] ℝ)
-    (h1 : 0 < f y1) (h2 : 0 < f y2) (h3 : 0 < f y3) (h4 : 0 < f y4) : False := by
-  have h_sum : f (y1 + y2 + y3 + y4) = 0 := by
-    rw [kraft_sum_zero, map_zero]
-  have h_pos : 0 < f (y1 + y2 + y3 + y4) := by
-    rw [map_add, map_add, map_add]
-    linarith
-  linarith
+lemma kraftY_sum : ∑ y ∈ KraftPair.Y, y = y1 + y2 + y3 + y4 := by
+  ext i
+  rw [Finset.sum_apply]
+  simp [KraftPair]
+  fin_cases i <;> norm_num [y1, y2, y3, y4]
 
-/-- The Kraft pair admits no separating functional. -/
-theorem KraftPair.not_separable : ¬ Separable KraftPair := by
+/-- Unit weights on the four Kraft vectors are a `CancellationWitness`. -/
+instance : CancellationWitness KraftPair where
+  c := fun _ => 0
+  d := fun _ => 1
+  c_nonneg := fun _ _ => le_rfl
+  d_nonneg := fun _ _ => zero_le_one
+  d_mass := by
+    change (0 : ℝ) < ∑ y ∈ ({y1, y2, y3, y4} : Finset (Fin 5 → ℝ)), (1 : ℝ)
+    simp
+  sum_zero := by
+    simp [one_smul, KraftPair]
+    exact kraftY_sum.trans kraft_sum_zero
+
+/-- A cancellation witness rules out a separating functional. -/
+theorem not_separable_of_cancellationWitness
+    {V : Type*} [AddCommGroup V] [Module ℝ V] [DecidableEq V]
+    (P : ScottPair ℝ V) [w : CancellationWitness P] : ¬ Separable P := by
   intro h
-  rcases h.exists_sep with ⟨f, -, hfY⟩
-  have hy1 : y1 ∈ KraftPair.Y := by simp [KraftPair]
-  have hy2 : y2 ∈ KraftPair.Y := by simp [KraftPair]
-  have hy3 : y3 ∈ KraftPair.Y := by simp [KraftPair]
-  have hy4 : y4 ∈ KraftPair.Y := by simp [KraftPair]
-  exact no_strictly_positive_functional f (hfY y1 hy1) (hfY y2 hy2)
-    (hfY y3 hy3) (hfY y4 hy4)
+  have inst : NoCancellation P := NoCancellation.of_separable (P := P)
+  exact inst.no_cancel w.c w.d w.c_nonneg w.d_nonneg w.d_mass w.sum_zero
+
+theorem KraftPair.not_separable : ¬ Separable KraftPair :=
+  not_separable_of_cancellationWitness KraftPair
 
 end
 

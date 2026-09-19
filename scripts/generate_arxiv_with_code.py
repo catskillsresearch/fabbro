@@ -77,10 +77,34 @@ PHASES: list[tuple[str, str, list[tuple[str, list[str]]]]] = [
     ),
 ]
 
-LEAN_FILES = [
-    "BSinMeasurementTheory.lean",
-    *[lean for _, _, courses in PHASES for _, leans in courses for lean in leans],
-]
+def library_lean_files() -> list[str]:
+    files = ["BSinMeasurementTheory.lean"]
+    lib = ROOT / "BSinMeasurementTheory"
+    files.extend(sorted(p.relative_to(ROOT).as_posix() for p in lib.rglob("*.lean")))
+    return files
+
+
+def course_lean_files(rels: list[str]) -> list[str]:
+    """Barrel path plus every file in a matching CourseXXXX/ directory."""
+    out: list[str] = []
+    seen: set[str] = set()
+
+    def add(rel: str) -> None:
+        if rel not in seen and (ROOT / rel).is_file():
+            seen.add(rel)
+            out.append(rel)
+
+    for rel in rels:
+        add(rel)
+        path = ROOT / rel
+        sibling_dir = path.with_suffix("") if path.suffix == ".lean" else path
+        if sibling_dir.is_dir():
+            for child in sorted(sibling_dir.rglob("*.lean")):
+                add(child.relative_to(ROOT).as_posix())
+    return out
+
+
+LEAN_FILES = library_lean_files()
 
 
 def paper_title(arxiv_text: str) -> str:
@@ -209,7 +233,7 @@ def main() -> None:
     for _, _, courses in PHASES:
         for md, leans in courses:
             course = md.replace(".md", "")
-            for lean in leans:
+            for lean in course_lean_files(leans):
                 parts.append(
                     f"| {course} | [`{lean}`]({GITHUB}/blob/main/{lean}) |\n"
                 )

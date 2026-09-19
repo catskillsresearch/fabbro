@@ -3,7 +3,6 @@ import BSinMeasurementTheory.Course21120Taylor
 import BSinMeasurementTheory.Course21127
 import BSinMeasurementTheory.Course21228
 import BSinMeasurementTheory.Course21241
-import BSinMeasurementTheory.Course21241Numerical
 import BSinMeasurementTheory.Course21292
 import BSinMeasurementTheory.Course21292Numerical
 import BSinMeasurementTheory.Course21321

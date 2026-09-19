@@ -44,4 +44,15 @@ class NoCancellation [Ring K] [LinearOrder K] [IsStrictOrderedRing K]
     (0 < ∑ y ∈ P.Y, d y) →
     (∑ x ∈ P.X, c x • x) + (∑ y ∈ P.Y, d y • y) ≠ 0
 
+/-- An explicit nonnegative combination that sums to zero with positive mass
+on `Y`. This is a property of a `ScottPair`, dual to `NoCancellation`. -/
+class CancellationWitness [Ring K] [LinearOrder K] [IsStrictOrderedRing K]
+    [AddCommGroup V] [Module K V] (P : ScottPair K V) where
+  c : V → K
+  d : V → K
+  c_nonneg : ∀ x ∈ P.X, 0 ≤ c x
+  d_nonneg : ∀ y ∈ P.Y, 0 ≤ d y
+  d_mass : 0 < ∑ y ∈ P.Y, d y
+  sum_zero : (∑ x ∈ P.X, c x • x) + (∑ y ∈ P.Y, d y • y) = 0
+
 end Course21321
