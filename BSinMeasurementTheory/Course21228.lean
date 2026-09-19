@@ -1,4 +1,6 @@
 import BSinMeasurementTheory.Course21228.Symmetric
 import BSinMeasurementTheory.Course21228.Counting
+import BSinMeasurementTheory.Course21228.SmallN2
+import BSinMeasurementTheory.Course21228.SmallN3
 import BSinMeasurementTheory.Course21228.SmallN
 import BSinMeasurementTheory.Course21228.Numerical

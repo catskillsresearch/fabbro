@@ -2,4 +2,9 @@ import BSinMeasurementTheory.Course21241.Space
 import BSinMeasurementTheory.Course21241.Basis
 import BSinMeasurementTheory.Course21241.Separation
 import BSinMeasurementTheory.Course21241.DualCone
+import BSinMeasurementTheory.Course21241.PointV
+import BSinMeasurementTheory.Course21241.SeparatingU
+import BSinMeasurementTheory.Course21241.DotAtV
+import BSinMeasurementTheory.Course21241.DotOnC
+import BSinMeasurementTheory.Course21241.PhiSeparates
 import BSinMeasurementTheory.Course21241.Numerical

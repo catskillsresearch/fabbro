@@ -15,7 +15,11 @@ PHASES: list[tuple[str, str, list[tuple[str, list[str]]]]] = [
         "Phase 1: Language and linear structure",
         "Calculus, proof language, dual bases, and combinatorial cancellation.",
         [
-            ("21-120-21-122.md", ["BSinMeasurementTheory/Course21120FTC.lean", "BSinMeasurementTheory/Course21120Taylor.lean"]),
+            ("21-120-21-122.md", [
+                "BSinMeasurementTheory/Course21120.lean",
+                "BSinMeasurementTheory/Course21120FTC.lean",
+                "BSinMeasurementTheory/Course21120Taylor.lean",
+            ]),
             ("21-127.md", ["BSinMeasurementTheory/Course21127.lean"]),
             ("21-241.md", ["BSinMeasurementTheory/Course21241.lean", "BSinMeasurementTheory/Course21241Numerical.lean"]),
             ("21-228.md", ["BSinMeasurementTheory/Course21228.lean"]),
@@ -196,8 +200,42 @@ def _looks_like_identifier(text: str) -> bool:
 FILE_BLURBS: dict[str, str] = {
     "BSinMeasurementTheory/Course21120FTC.lean":
         "Fundamental theorem of calculus for the Fresnel-type integrand.",
+    "BSinMeasurementTheory/Course21120/Existence.lean":
+        "Comparison bound that gives absolute convergence of the improper integral.",
+    "BSinMeasurementTheory/Course21120/TailBound.lean":
+        "Arctan comparison bound for the tail integral.",
+    "BSinMeasurementTheory/Course21120/TaylorExpansion.lean":
+        "Degree-9 Taylor polynomial of the integrated expansion.",
+    "BSinMeasurementTheory/Course21120/TaylorEstimate.lean":
+        "Exact value and four-decimal rounding of T9 at 1/2.",
+    "BSinMeasurementTheory/Course21120/TaylorError.lean":
+        "Alternating-series tail bound for the degree-9 truncation.",
     "BSinMeasurementTheory/Course21120Taylor.lean":
-        "Degree-9 Taylor estimate of f(0.5) with an explicit remainder bound.",
+        "Umbrella importer for the Taylor-expansion modules.",
+    "BSinMeasurementTheory/Course21241/PointV.lean":
+        "A concrete point v outside the non-negative orthant.",
+    "BSinMeasurementTheory/Course21241/SeparatingU.lean":
+        "The standard-basis separating vector u = e_0.",
+    "BSinMeasurementTheory/Course21241/DotAtV.lean":
+        "Inner product of the separator with v.",
+    "BSinMeasurementTheory/Course21241/DotOnC.lean":
+        "Inner product of the separator on the orthant.",
+    "BSinMeasurementTheory/Course21241/PhiSeparates.lean":
+        "The linear functional associated to u separates v from C.",
+    "BSinMeasurementTheory/Course21355/TailExtremes.lean":
+        "Tail supremum and tail infimum, and their monotonicity.",
+    "BSinMeasurementTheory/Course21355/LimsupLiminfExist.lean":
+        "Existence of limsup and liminf for a bounded real sequence.",
+    "BSinMeasurementTheory/Course21355/AltSeqValues.lean":
+        "Even and odd values of the sequence (-1)^n.",
+    "BSinMeasurementTheory/Course21355/AltSeqDiverges.lean":
+        "Epsilon-argument that the alternating sequence diverges.",
+    "BSinMeasurementTheory/Course21228/SmallN2.lean":
+        "Exact pair count for n = 2.",
+    "BSinMeasurementTheory/Course21228/SmallN3.lean":
+        "Exact pair count for n = 3.",
+    "BSinMeasurementTheory/Course21640/Positivity.lean":
+        "A norm-dominated linear functional is positive.",
     "BSinMeasurementTheory/Course21127/NonzeroDenomInt.lean":
         "Integers with a nonzero denominator: the domain of the fraction relation.",
     "BSinMeasurementTheory/Course21127/ToRat.lean":
