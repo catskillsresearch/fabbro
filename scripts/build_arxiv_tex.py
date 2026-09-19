@@ -280,6 +280,9 @@ def cleanup_pandoc_latex(latex: str) -> str:
     for cmd in ("section", "subsection", "subsubsection", "paragraph"):
         latex = re.sub(rf"(\\{cmd}\{{)\d+(?:\.\d+)*\.?\s+", r"\1", latex)
     latex = re.sub(r"\n{3,}", "\n\n", latex)
+    # Numbered top-level sections start on a new page.  \section* (TOC/LOF)
+    # is emitted in the title page, not here.
+    latex = latex.replace(r"\section{", r"\clearpage\section{")
     return latex
 
 
@@ -348,7 +351,6 @@ def build_title_page(abstract_latex: str) -> str:
         \\tableofcontents
         \\clearpage
         \\listoffigures
-        \\clearpage
         """
     ).strip()
 

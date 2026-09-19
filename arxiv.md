@@ -150,6 +150,7 @@ flowchart LR
 
   subgraph ML["Mathlib subsections"]
     direction TB
+    style ML fill:#fff7ed,stroke:#c2410c,stroke-width:2px
     mlCalc["Analysis.Calculus"]:::mathlib
     mlInt["MeasureTheory.Integral"]:::mathlib
     mlTrig["Analysis.SpecialFunctions"]:::mathlib
@@ -174,6 +175,7 @@ flowchart LR
 
   subgraph CR["Courses"]
     direction TB
+    style CR fill:#eff6ff,stroke:#1d4ed8,stroke-width:2px
     C120["21-120 / 21-122"]:::course
     C127["21-127"]:::course
     C241["21-241"]:::course
