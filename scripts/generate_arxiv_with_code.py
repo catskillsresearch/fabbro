@@ -25,9 +25,23 @@ PHASES: list[tuple[str, str, list[tuple[str, list[str]]]]] = [
         "Phase 2: Analysis, algebras, and formal proof",
         "Completeness, finite Boolean algebras, and Scott's Theorems 1.1--1.3 in Lean.",
         [
-            ("21-355.md", ["BSinMeasurementTheory/Course21355.lean"]),
+            ("21-355.md", [
+                "BSinMeasurementTheory/Course21355.lean",
+                "BSinMeasurementTheory/Course21355/BolzanoWeierstrass.lean",
+                "BSinMeasurementTheory/Course21355/LimsupLiminf.lean",
+                "BSinMeasurementTheory/Course21355/AltSeq.lean",
+                "BSinMeasurementTheory/Course21355/CompactIcc.lean",
+                "BSinMeasurementTheory/Course21355/Numerical.lean",
+            ]),
             ("21-373.md", ["BSinMeasurementTheory/Course21373.lean", "BSinMeasurementTheory/Course21373Numerical.lean"]),
-            ("21-321.md", ["BSinMeasurementTheory/Course21321.lean", "BSinMeasurementTheory/Course21321Kraft.lean"]),
+            ("21-321.md", [
+                "BSinMeasurementTheory/Course21321.lean",
+                "BSinMeasurementTheory/Course21321/ScottPair.lean",
+                "BSinMeasurementTheory/Course21321/Theorem11.lean",
+                "BSinMeasurementTheory/Course21321/Theorem12.lean",
+                "BSinMeasurementTheory/Course21321/Theorem13.lean",
+                "BSinMeasurementTheory/Course21321/Kraft.lean",
+            ]),
         ],
     ),
     (
@@ -98,16 +112,36 @@ def demote_headings(text: str, n: int = 2) -> str:
 
 
 GEMINI_LINE = re.compile(r"^\*\*Gemini[^*]*\*\*\.?[^\n]*$", re.MULTILINE)
+LEAN_INCLUDE = re.compile(
+    r"<!--\s*lean:\s*(\S+?)\s*-->(?:\s*```lean\n.*?^```)*",
+    re.MULTILINE | re.DOTALL,
+)
+
+
+def expand_lean_includes(text: str) -> str:
+    """Replace `<!-- lean: path -->` with that file's source, as a lean fence."""
+
+    def repl(match: re.Match[str]) -> str:
+        rel = match.group(1)
+        path = ROOT / rel
+        if not path.is_file():
+            raise FileNotFoundError(f"lean include missing: {rel}")
+        code = path.read_text(encoding="utf-8").rstrip()
+        return f"<!-- lean: {rel} -->\n\n```lean\n{code}\n```\n"
+
+    return LEAN_INCLUDE.sub(repl, text)
 
 
 def rewrite_lean_links(text: str) -> str:
     text = re.sub(r"^\[← Syllabus\]\([^)]+\)\s*\n+", "", text)
     text = GEMINI_LINE.sub("", text)
+    text = expand_lean_includes(text)
     text = re.sub(
         r"Lean 4 formalization: \[`([^`]+)`\]\([^)]+\)\.",
-        r"Lean 4 formalization: appendix module `\1`.",
+        r"<!-- lean: \1 -->",
         text,
     )
+    text = expand_lean_includes(text)
     return text
 
 
@@ -185,12 +219,11 @@ def main() -> None:
     for rel in LEAN_FILES:
         code = (ROOT / rel).read_text(encoding="utf-8")
         total_lines += len(code.splitlines())
-        parts.append(f"### {rel}\n\n")
-        parts.append("```lean\n")
-        parts.append(code.rstrip() + "\n")
-        parts.append("```\n\n")
 
-    parts.append(f"**Total:** {len(LEAN_FILES)} modules, {total_lines} lines of Lean.\n")
+    parts.append(
+        f"The Lean sources are inlined in the course writeups above. "
+        f"**Total:** {len(LEAN_FILES)} modules, {total_lines} lines.\n"
+    )
 
     out = ROOT / "arxiv_with_code.md"
     out.write_text("".join(parts), encoding="utf-8")
