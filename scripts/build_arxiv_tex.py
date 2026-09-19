@@ -13,6 +13,7 @@ import subprocess
 import sys
 import textwrap
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = Path(__file__).resolve().parent
@@ -31,6 +32,27 @@ GITHUB_URL = r"https://github.com/catskillsresearch/fabbro"
 REPORT_NUMBER = "CMU-CS-26-XXX"
 REPORT_DATE = "September 2026"
 
+# Mermaid course node id -> pandoc hypertarget for that course subsection.
+COURSE_ANCHORS = {
+    "C120": "differential-and-integral-calculus-integration-and-approximation",
+    "C127": "concepts-of-mathematics",
+    "C241": "matrices-and-linear-transformations",
+    "C228": "discrete-mathematics",
+    "C355": "principles-of-real-analysis-i",
+    "C373": "algebraic-structures",
+    "C321": "interactive-theorem-proving",
+    "C292": "operations-research-i",
+    "C329": "set-theory",
+    "C651": "general-topology",
+    "C720": "measure-and-integration",
+    "C640": "introduction-to-functional-analysis",
+    "C410": "independent-study",
+    "C322": "topics-in-formal-mathematics-opportunistic",
+}
+
+TRANSLATE_RE = re.compile(r"translate\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)")
+FLOW_NODE_RE = re.compile(r"^flowchart-(C\d+)-\d+$")
+
 
 def find_chrome() -> str | None:
     env = os.environ.get("PUPPETEER_EXECUTABLE_PATH")
@@ -43,12 +65,7 @@ def find_chrome() -> str | None:
     return None
 
 
-def render_mermaid(code: str, idx: int) -> str:
-    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
-    mmd_path = FIGURES_DIR / f"figure-{idx:03d}.mmd"
-    png_path = FIGURES_DIR / f"figure-{idx:03d}.png"
-    mmd_path.write_text(code.strip() + "\n", encoding="utf-8")
-
+def run_mmdc(mmd_path: Path, out_path: Path, idx: int) -> None:
     mmdc = shutil.which("mmdc")
     if not mmdc:
         raise RuntimeError(
@@ -64,7 +81,7 @@ def render_mermaid(code: str, idx: int) -> str:
         "-i",
         str(mmd_path),
         "-o",
-        str(png_path),
+        str(out_path),
         "-b",
         "white",
         "-w",
@@ -75,10 +92,93 @@ def render_mermaid(code: str, idx: int) -> str:
     if PUPPETEER_CONFIG.is_file():
         cmd += ["-p", str(PUPPETEER_CONFIG)]
     proc = subprocess.run(cmd, env=env, capture_output=True, text=True, check=False)
-    if proc.returncode != 0 or not png_path.is_file():
+    if proc.returncode != 0 or not out_path.is_file():
         sys.stderr.write(proc.stdout + "\n" + proc.stderr + "\n")
-        raise RuntimeError(f"mmdc failed to render figure {idx}")
-    return png_path.relative_to(ROOT).as_posix()
+        raise RuntimeError(f"mmdc failed to render figure {idx} ({out_path.suffix})")
+
+
+def _parse_translate(transform: str | None) -> tuple[float, float]:
+    if not transform:
+        return 0.0, 0.0
+    match = TRANSLATE_RE.search(transform)
+    if not match:
+        return 0.0, 0.0
+    return float(match.group(1)), float(match.group(2))
+
+
+def course_hotspots_from_svg(svg_path: Path) -> list[tuple[str, float, float, float, float]]:
+    """Map course nodes to unit-square boxes (origin south-west) for TikZ."""
+    root = ET.fromstring(svg_path.read_text(encoding="utf-8"))
+    vb = (root.attrib.get("viewBox") or "0 0 1 1").split()
+    min_x, min_y, width, height = (float(v) for v in vb)
+    if width <= 0 or height <= 0:
+        return []
+
+    found: dict[str, tuple[str, float, float, float, float]] = {}
+
+    def walk(el: ET.Element, tx: float, ty: float) -> None:
+        dtx, dty = _parse_translate(el.attrib.get("transform"))
+        tx, ty = tx + dtx, ty + dty
+        match = FLOW_NODE_RE.match(el.attrib.get("id") or "")
+        if match:
+            node = match.group(1)
+            anchor = COURSE_ANCHORS.get(node)
+            if anchor:
+                rect = next((c for c in el.iter() if c.tag.endswith("rect")), None)
+                if rect is not None and "x" in rect.attrib:
+                    x = float(rect.attrib["x"]) + tx
+                    y = float(rect.attrib["y"]) + ty
+                    w = float(rect.attrib["width"])
+                    h = float(rect.attrib["height"])
+                    x0 = (x - min_x) / width
+                    x1 = (x + w - min_x) / width
+                    y0 = 1.0 - (y + h - min_y) / height
+                    y1 = 1.0 - (y - min_y) / height
+                    found[node] = (anchor, x0, y0, x1, y1)
+        for child in el:
+            walk(child, tx, ty)
+
+    walk(root, 0.0, 0.0)
+    return [found[key] for key in COURSE_ANCHORS if key in found]
+
+
+def figure_include_latex(
+    rel_path: str,
+    hotspots: list[tuple[str, float, float, float, float]],
+) -> str:
+    img = (
+        f"\\includegraphics[max width=\\linewidth,"
+        f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}"
+    )
+    if not hotspots:
+        return img + "\n"
+    spots = "\n".join(
+        f"    \\coursehotspot{{{anchor}}}{{{x0:.5f}}}{{{y0:.5f}}}{{{x1:.5f}}}{{{y1:.5f}}}"
+        for anchor, x0, y0, x1, y1 in hotspots
+    )
+    return (
+        "\\begin{tikzpicture}\n"
+        f"  \\node[anchor=south west,inner sep=0] (img) {{{img}}};\n"
+        "  \\begin{scope}[x={(img.south east)},y={(img.north west)}]\n"
+        f"{spots}\n"
+        "  \\end{scope}\n"
+        "\\end{tikzpicture}\n"
+    )
+
+
+def render_mermaid(code: str, idx: int) -> tuple[str, list[tuple[str, float, float, float, float]]]:
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    mmd_path = FIGURES_DIR / f"figure-{idx:03d}.mmd"
+    png_path = FIGURES_DIR / f"figure-{idx:03d}.png"
+    mmd_path.write_text(code.strip() + "\n", encoding="utf-8")
+    run_mmdc(mmd_path, png_path, idx)
+
+    hotspots: list[tuple[str, float, float, float, float]] = []
+    if any(node in code for node in COURSE_ANCHORS):
+        svg_path = FIGURES_DIR / f"figure-{idx:03d}.svg"
+        run_mmdc(mmd_path, svg_path, idx)
+        hotspots = course_hotspots_from_svg(svg_path)
+    return png_path.relative_to(ROOT).as_posix(), hotspots
 
 
 def extract_title() -> str:
@@ -237,7 +337,7 @@ def replace_fences(
             return f"\n\n{key}\n\n"
         if lang == "mermaid":
             key = f"FIGINCLUDE{other_idx:03d}"
-            rel_path = render_mermaid(body, figure_idx)
+            rel_path, hotspots = render_mermaid(body, figure_idx)
             if figure_idx < len(figure_captions):
                 caption = figure_captions[figure_idx]
             else:
@@ -248,8 +348,7 @@ def replace_fences(
             cap = escape_latex_caption(caption)
             placeholders[key] = (
                 "\\begin{figure}[htbp]\n\\centering\n"
-                f"\\includegraphics[max width=\\linewidth,"
-                f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}\n"
+                f"{figure_include_latex(rel_path, hotspots)}"
                 f"\\caption{{{cap}}}\n"
                 f"\\label{{{label}}}\n"
                 "\\end{figure}\n"

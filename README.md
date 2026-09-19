@@ -54,7 +54,7 @@ The conceptual buildup of that sequence is Figure 1. The Mathlib
 subsections required to read each course's Lean are Figure 2. The Lean
 library does not import across courses.
 
-<!-- figure-caption: Conceptual buildup of the reconstructed 21-xxx syllabus toward Scott (1964). Blue nodes are courses, grouped by phase. -->
+<!-- figure-caption: Conceptual buildup of the reconstructed 21-xxx syllabus toward Scott (1964). Blue nodes are courses, grouped by phase. Course nodes are hyperlinked to the corresponding course notes. -->
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 24, "rankSpacing": 40}}}%%
 flowchart TB
@@ -111,9 +111,24 @@ flowchart TB
   C373 --> C322
   C321 --> C322
   C410 --> C322
+
+  click C120 "courses/21-120-21-122.md" "21-120 / 21-122"
+  click C127 "courses/21-127.md" "21-127"
+  click C241 "courses/21-241.md" "21-241"
+  click C228 "courses/21-228.md" "21-228"
+  click C355 "courses/21-355.md" "21-355"
+  click C373 "courses/21-373.md" "21-373"
+  click C321 "courses/21-321.md" "21-321"
+  click C292 "courses/21-292.md" "21-292"
+  click C329 "courses/21-329.md" "21-329"
+  click C651 "courses/21-651.md" "21-651"
+  click C720 "courses/21-720.md" "21-720"
+  click C640 "courses/21-640.md" "21-640"
+  click C410 "courses/21-410-21-599.md" "21-410 / 21-599"
+  click C322 "courses/21-322.md" "21-322"
 ```
 
-<!-- figure-caption: Mathlib subsections required to read each course. Orange nodes are Mathlib; blue nodes are courses. -->
+<!-- figure-caption: Mathlib subsections required to read each course. Orange nodes are Mathlib; blue nodes are courses. Course nodes are hyperlinked to the corresponding course notes. -->
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 18, "rankSpacing": 50}}}%%
 flowchart LR
@@ -200,6 +215,21 @@ flowchart LR
   mlBA --> C322
   mlCMap --> C322
   mlMeas --> C322
+
+  click C120 "courses/21-120-21-122.md" "21-120 / 21-122"
+  click C127 "courses/21-127.md" "21-127"
+  click C241 "courses/21-241.md" "21-241"
+  click C228 "courses/21-228.md" "21-228"
+  click C355 "courses/21-355.md" "21-355"
+  click C373 "courses/21-373.md" "21-373"
+  click C321 "courses/21-321.md" "21-321"
+  click C292 "courses/21-292.md" "21-292"
+  click C329 "courses/21-329.md" "21-329"
+  click C651 "courses/21-651.md" "21-651"
+  click C720 "courses/21-720.md" "21-720"
+  click C640 "courses/21-640.md" "21-640"
+  click C410 "courses/21-410-21-599.md" "21-410 / 21-599"
+  click C322 "courses/21-322.md" "21-322"
 ```
 
 ## Build

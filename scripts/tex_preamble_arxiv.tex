@@ -16,6 +16,7 @@
 \usepackage{tabularx}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{tikz}
 \usepackage[export]{adjustbox}
 \usepackage{longtable}
 \usepackage{calc}
@@ -30,6 +31,16 @@
   \hypersetup{urlcolor=green!40!black}%
   \href{#1}{\textbf{#2}}%
   \endgroup
+}
+
+% Invisible rectangle over a Mermaid PNG, in unit-square coordinates
+% (origin south-west).  Used to hyperlink course nodes to their sections.
+\usetikzlibrary{calc}
+\newcommand{\coursehotspot}[5]{%
+  \path let \p1=(#2,#3), \p2=(#4,#5) in
+    node[anchor=south west,inner sep=0,outer sep=0] at (\p1) {%
+      \hyperlink{#1}{\phantom{\rule{\dimexpr\x2-\x1\relax}{\dimexpr\y2-\y1\relax}}}%
+    };%
 }
 
 \newtheorem{theorem}{Theorem}[section]
