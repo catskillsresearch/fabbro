@@ -55,9 +55,9 @@ infinite extension of Theorem 4.1.
 
 The formalizations live in the Lean library `BSinMeasurementTheory`. Each
 course snippet is a self-contained module. The root file
-`BSinMeasurementTheory.lean` imports all of them. The English arguments
-occupy the body of this report, in syllabus order; the Lean sources are
-collected in the appendix.
+`BSinMeasurementTheory.lean` imports all of them. The English arguments occupy the body of this report, in syllabus order,
+with each Lean module inlined next to the claim it proves. The appendix
+is an index of filenames, each linking to the source on GitHub.
 
 ## Syllabus
 

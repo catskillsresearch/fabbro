@@ -106,6 +106,242 @@ def course_lean_files(rels: list[str]) -> list[str]:
 
 LEAN_FILES = library_lean_files()
 
+MODULE_DOC = re.compile(r"/-!\s*(.*?)\s*-/", re.DOTALL)
+DECL_DOC = re.compile(r"/--\s*(.*?)\s*-/", re.DOTALL)
+
+
+_ASCII_FROM_UNICODE = (
+    ("ℝ", "R"),
+    ("ℚ", "Q"),
+    ("ℤ", "Z"),
+    ("ℕ", "N"),
+    ("ℵ", "aleph"),
+    ("∫", "integral "),
+    ("≤", "<="),
+    ("≥", ">="),
+    ("≠", "!="),
+    ("∈", " in "),
+    ("⊆", " subset "),
+    ("∅", "empty"),
+    ("⊥", "bottom"),
+    ("⊤", "top"),
+    ("∧", " and "),
+    ("∨", " or "),
+    ("¬", "not "),
+    ("→", " -> "),
+    ("↔", " <-> "),
+    ("∀", "for all "),
+    ("∃", "exists "),
+    ("∞", "infinity"),
+    ("α", "alpha"),
+    ("ε", "epsilon"),
+    ("φ", "phi"),
+    ("Λ", "Lambda"),
+    ("₀", "0"),
+    ("₁", "1"),
+    ("₂", "2"),
+    ("₃", "3"),
+    ("ˣ", "x"),
+    ("²", "^2"),
+    ("³", "^3"),
+    ("⁴", "^4"),
+    ("⁵", "^5"),
+    ("—", "--"),
+    ("–", "-"),
+    ("‘", "'"),
+    ("’", "'"),
+    ("“", '"'),
+    ("”", '"'),
+    ("×", "x"),
+)
+
+
+def _ascii(text: str) -> str:
+    for src, dst in _ASCII_FROM_UNICODE:
+        text = text.replace(src, dst)
+    text = re.sub(r"[^\x00-\x7f]", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def _clip(text: str) -> str:
+    text = _ascii(re.sub(r"\s+", " ", text.replace("`", "")).strip())
+    if not text:
+        return ""
+    cut = len(text)
+    for sep in (". ", "; "):
+        idx = text.find(sep)
+        if 20 <= idx < cut:
+            cut = idx
+    sentence = text[:cut].rstrip(" .;:")
+    if len(sentence) > 140:
+        sentence = sentence[:137].rsplit(" ", 1)[0] + "..."
+    return sentence
+
+
+def _one_line(text: str) -> str:
+    """Prefer the first heading or sentence, not the whole module comment."""
+    for raw in text.splitlines():
+        line = re.sub(r"^#+\s*", "", raw.strip())
+        if line:
+            return _clip(line)
+    return _clip(text)
+
+
+def _looks_like_identifier(text: str) -> bool:
+    return bool(text) and " " not in text and text.isalnum()
+
+
+# Path-keyed first, then basename. Used when module comments are headings or fragments.
+FILE_BLURBS: dict[str, str] = {
+    "BSinMeasurementTheory/Course21120FTC.lean":
+        "Fundamental theorem of calculus for the Fresnel-type integrand.",
+    "BSinMeasurementTheory/Course21120Taylor.lean":
+        "Degree-9 Taylor estimate of f(0.5) with an explicit remainder bound.",
+    "BSinMeasurementTheory/Course21127/NonzeroDenomInt.lean":
+        "Integers with a nonzero denominator: the domain of the fraction relation.",
+    "BSinMeasurementTheory/Course21127/ToRat.lean":
+        "The explicit map from a pair (a, b) to the rationals, and the induced bijection.",
+    "BSinMeasurementTheory/Course21127/WellOrder.lean":
+        "Well-ordered subsets of Q, and a refutation of the claimed well-order of the positives.",
+    "BSinMeasurementTheory/Course21228/Counting.lean":
+        "Count of permutation pairs that make two sequences agree termwise.",
+    "BSinMeasurementTheory/Course21228/SmallN.lean":
+        "Exact pair counts for n = 2 and n = 3.",
+    "BSinMeasurementTheory/Course21228/Symmetric.lean":
+        "Symmetric conditions on length-n sequences and permutation invariance of sums.",
+    "BSinMeasurementTheory/Course21241/Basis.lean":
+        "Standard primal basis of three-space and the dual basis functionals.",
+    "BSinMeasurementTheory/Course21241/DualCone.lean":
+        "The dual cone of the non-negative orthant.",
+    "BSinMeasurementTheory/Course21241/Numerical.lean":
+        "Concrete separating functional for a point outside the orthant.",
+    "BSinMeasurementTheory/Course21241/Separation.lean":
+        "Euclidean inner product, Riesz identification, and a separating vector.",
+    "BSinMeasurementTheory/Course21241/Space.lean":
+        "The non-negative orthant cone in three-space.",
+    "BSinMeasurementTheory/Course21292/Instance.lean":
+        "A concrete 3x3 Scott-type linear program.",
+    "BSinMeasurementTheory/Course21292/LinearProgram.lean":
+        "Inequality-form linear programs over the rationals.",
+    "BSinMeasurementTheory/Course21292/WeakDuality.lean":
+        "Weak duality for a primal/dual linear program.",
+    "BSinMeasurementTheory/Course21292Numerical.lean":
+        "Numerical checks of the four calculations in the 21-292 example.",
+    "BSinMeasurementTheory/Course21321/Kraft.lean":
+        "Kraft difference vectors as a ScottPair with a cancellation witness.",
+    "BSinMeasurementTheory/Course21321/ScottPair.lean":
+        "Scott pairs, separating functionals, and the cancellation-witness class.",
+    "BSinMeasurementTheory/Course21321/Theorem11.lean":
+        "Scott's Theorem 1.1: a separable pair satisfies real non-cancellation.",
+    "BSinMeasurementTheory/Course21321/Theorem12.lean":
+        "Scott's Theorem 1.2: rational separability implies combinatorial non-cancellation.",
+    "BSinMeasurementTheory/Course21321/Theorem13.lean":
+        "Scott's Theorem 1.3 (one direction): rational non-cancellation implies real non-cancellation.",
+    "BSinMeasurementTheory/Course21322/AtomIso.lean":
+        "Canonical bijection between atoms and the Stone space of a finite algebra.",
+    "BSinMeasurementTheory/Course21322/Hom.lean":
+        "Boolean homomorphisms from a power set into Bool, and principal evaluations.",
+    "BSinMeasurementTheory/Course21322/MeasureCollapse.lean":
+        "Collapse of Stone-space measure evaluation to the discrete atomic measure.",
+    "BSinMeasurementTheory/Course21322/Numerical.lean":
+        "Direct calculation of the atomic measure on {0, 2}.",
+    "BSinMeasurementTheory/Course21322/StoneClopen.lean":
+        "The Stone clopen associated with an element and preservation of membership.",
+    "BSinMeasurementTheory/Course21329/Cardinality.lean":
+        "Cardinal-arithmetic argument that the Stone space is large.",
+    "BSinMeasurementTheory/Course21329/Filter.lean":
+        "Filters, proper filters, and ultrafilters on a bounded lattice.",
+    "BSinMeasurementTheory/Course21329/StoneNonempty.lean":
+        "The principal filter generated by top, and non-emptiness of the Stone space.",
+    "BSinMeasurementTheory/Course21329/UltrafilterExtension.lean":
+        "Ultrafilter extension: a chain of proper filters unions to a proper filter.",
+    "BSinMeasurementTheory/Course21355/AltSeq.lean":
+        "The alternating sequence of plus and minus one, and an epsilon-argument that it diverges.",
+    "BSinMeasurementTheory/Course21355/BolzanoWeierstrass.lean":
+        "Bolzano-Weierstrass: a bounded real sequence has a convergent subsequence.",
+    "BSinMeasurementTheory/Course21355/CompactIcc.lean":
+        "Closed bounded intervals in R are compact.",
+    "BSinMeasurementTheory/Course21355/LimsupLiminf.lean":
+        "Tail supremum and tail infimum of a real sequence.",
+    "BSinMeasurementTheory/Course21355/Numerical.lean":
+        "Computable alternating sequence used to inspect the example of (c).",
+    "BSinMeasurementTheory/Course21373/AtomJoin.lean":
+        "Join and disjointness properties of Boolean atoms.",
+    "BSinMeasurementTheory/Course21373/BooleanAction.lean":
+        "Boolean automorphisms and atoms of the fixed-point subalgebra.",
+    "BSinMeasurementTheory/Course21373/IsBooleanAtom.lean":
+        "Atoms in a Boolean algebra.",
+    "BSinMeasurementTheory/Course21373/Representation.lean":
+        "Canonical representation of an element as the join of the atoms below it.",
+    "BSinMeasurementTheory/Course21373Numerical.lean":
+        "Numerical example for the finite Boolean-algebra representation.",
+    "BSinMeasurementTheory/Course21410/Glue.lean":
+        "Glue lemmas: inclusion-exclusion, monotonicity, and preference preservation.",
+    "BSinMeasurementTheory/Course21410/Measure.lean":
+        "Finitely additive probability measures on a finite space.",
+    "BSinMeasurementTheory/Course21640/Numerical.lean":
+        "Sup-norm example of a sublinear functional and a dominated extension on the plane.",
+    "BSinMeasurementTheory/Course21640/Sublinear.lean":
+        "Sublinear functionals and dominated linear extensions.",
+    "BSinMeasurementTheory/Course21651/BooleanHom.lean":
+        "Boolean algebra homomorphisms from B to Bool.",
+    "BSinMeasurementTheory/Course21651/ClosedEmbedding.lean":
+        "The Stone space as an intersection of closed equalizer sets in B -> Bool.",
+    "BSinMeasurementTheory/Course21651/Separation.lean":
+        "Separation properties used by the Stone embedding argument.",
+    "BSinMeasurementTheory/Course21651/StoneMap.lean":
+        "The Stone clopen associated with an element of B.",
+    "BSinMeasurementTheory/Course21651/TwoAlgebra.lean":
+        "Stone space of the four-element Boolean algebra on Fin 2.",
+    "BSinMeasurementTheory/Course21720/Boundedness.lean":
+        "Positive linear functionals on C(X, R) are bounded.",
+    "BSinMeasurementTheory/Course21720/Numerical.lean":
+        "The concrete functional Lambda(f) = 3 f(0) + 2 f(1).",
+    "BSinMeasurementTheory/Course21720/StoneMeasure.lean":
+        "Finitely additive measures on a Boolean algebra from a positive functional.",
+    "Numerical.lean": "Numerical checks reproducing the English example.",
+}
+
+
+def is_import_only(code: str) -> bool:
+    lines = [
+        ln.strip()
+        for ln in code.splitlines()
+        if ln.strip() and not ln.strip().startswith("--")
+    ]
+    return bool(lines) and all(ln.startswith("import ") for ln in lines)
+
+
+def describe_lean(rel: str) -> str:
+    """One-line English for the appendix index; sources stay inlined in the notes."""
+    if rel == "BSinMeasurementTheory.lean":
+        return "Root importer for the library."
+    code = (ROOT / rel).read_text(encoding="utf-8")
+    if is_import_only(code):
+        stem = Path(rel).stem
+        m = re.fullmatch(r"Course(\d{5})", stem)
+        if m:
+            num = m.group(1)
+            return f"Umbrella importer for the 21-{num[2:]} modules."
+        if stem.startswith("Course"):
+            return f"Umbrella importer for the {stem} modules."
+        return "Umbrella importer for this course."
+    for key in (rel, Path(rel).name):
+        if key in FILE_BLURBS:
+            return _ascii(FILE_BLURBS[key])
+    m = MODULE_DOC.search(code)
+    if m:
+        desc = _one_line(m.group(1))
+        if desc and not _looks_like_identifier(desc):
+            return desc
+    m = DECL_DOC.search(code)
+    if m:
+        desc = _one_line(m.group(1))
+        if desc and not _looks_like_identifier(desc):
+            return desc
+    return Path(rel).stem
+
 
 def paper_title(arxiv_text: str) -> str:
     first = arxiv_text.splitlines()[0] if arxiv_text else "# Formalization of a BS in Measurement Theory"
@@ -224,30 +460,20 @@ def main() -> None:
 
     parts.append("## Lean module index\n\n")
     parts.append(
-        f"Checked by `lake build`. Complete sources: [{GITHUB}]({GITHUB}). "
-        "Each subsection is the corresponding library file.\n\n"
+        f"Checked by `lake build`. Each module is inlined next to the English "
+        f"it proves. This appendix lists the files only; the sources live at "
+        f"[{GITHUB}]({GITHUB}).\n\n"
     )
-    parts.append("| Role | File |\n| --- | --- |\n")
-    parts.append("| Root importer | [`BSinMeasurementTheory.lean`]("
-                  f"{GITHUB}/blob/main/BSinMeasurementTheory.lean) |\n")
-    for _, _, courses in PHASES:
-        for md, leans in courses:
-            course = md.replace(".md", "")
-            for lean in course_lean_files(leans):
-                parts.append(
-                    f"| {course} | [`{lean}`]({GITHUB}/blob/main/{lean}) |\n"
-                )
+    parts.append("| File | Contents |\n| --- | --- |\n")
+    for rel in LEAN_FILES:
+        link = f"[`{rel}`]({GITHUB}/blob/main/{rel})"
+        parts.append(f"| {link} | {describe_lean(rel)} |\n")
     parts.append("\n")
 
-    total_lines = 0
-    for rel in LEAN_FILES:
-        code = (ROOT / rel).read_text(encoding="utf-8")
-        total_lines += len(code.splitlines())
-
-    parts.append(
-        f"The Lean sources are inlined in the course writeups above. "
-        f"**Total:** {len(LEAN_FILES)} modules, {total_lines} lines.\n"
+    total_lines = sum(
+        len((ROOT / rel).read_text(encoding="utf-8").splitlines()) for rel in LEAN_FILES
     )
+    parts.append(f"**Total:** {len(LEAN_FILES)} modules, {total_lines} lines.\n")
 
     out = ROOT / "arxiv_with_code.md"
     out.write_text("".join(parts), encoding="utf-8")

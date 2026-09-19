@@ -43,6 +43,7 @@ series and arXiv cross-archive.
 2. Confirm the author, September 2026 date, and correspondence email.
 3. Run `lake build` and `bash scripts/build_arxiv_pdf.sh`.
 4. Inspect the cover, abstract, syllabus, course chapters, acknowledgments,
-   references, and Lean module appendix.
+   references, and Lean module index (filenames and GitHub links, not source
+   reprints).
 5. Upload `dist/arxiv_submit.zip` only after deleting prior arXiv submission
    files so the source set is replaced rather than merged.
