@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 TEX="arxiv.tex"
 PDF="arxiv.pdf"
 
-echo "==> Regenerating arxiv.tex + lean-listings/"
+echo "==> Regenerating arxiv.tex + lean-listings/ + figures/"
 bash scripts/build_arxiv_tex.sh
 
 echo "==> Compiling PDF (pdfLaTeX via latexmk)"

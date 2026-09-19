@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Convert arxiv_with_code.md to a CMU SCS technical report."""
+"""Convert arxiv_with_code.md to a CMU SCS technical report.
+
+Mermaid fences are rendered live to PNG via mermaid-cli (mmdc), never PDF.
+"""
 
 from __future__ import annotations
 
+import os
 import re
+import shutil
 import subprocess
 import sys
 import textwrap
@@ -18,11 +23,62 @@ SRC = ROOT / "arxiv_with_code.md"
 OUT = ROOT / "arxiv.tex"
 PREAMBLE = SCRIPTS / "tex_preamble_arxiv.tex"
 LISTINGS_DIR = ROOT / "lean-listings"
+FIGURES_DIR = ROOT / "figures"
+PUPPETEER_CONFIG = SCRIPTS / "puppeteer-config.json"
 LISTING_CHUNK_LINES = 400
 
 GITHUB_URL = r"https://github.com/catskillsresearch/fabbro"
 REPORT_NUMBER = "CMU-CS-26-XXX"
 REPORT_DATE = "September 2026"
+
+
+def find_chrome() -> str | None:
+    env = os.environ.get("PUPPETEER_EXECUTABLE_PATH")
+    if env and Path(env).exists():
+        return env
+    for name in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser"):
+        path = shutil.which(name)
+        if path:
+            return path
+    return None
+
+
+def render_mermaid(code: str, idx: int) -> str:
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    mmd_path = FIGURES_DIR / f"figure-{idx:03d}.mmd"
+    png_path = FIGURES_DIR / f"figure-{idx:03d}.png"
+    mmd_path.write_text(code.strip() + "\n", encoding="utf-8")
+
+    mmdc = shutil.which("mmdc")
+    if not mmdc:
+        raise RuntimeError(
+            "mermaid-cli (mmdc) not found; install with "
+            "`npm install -g @mermaid-js/mermaid-cli`"
+        )
+    env = os.environ.copy()
+    chrome = find_chrome()
+    if chrome:
+        env["PUPPETEER_EXECUTABLE_PATH"] = chrome
+    cmd = [
+        mmdc,
+        "-i",
+        str(mmd_path),
+        "-o",
+        str(png_path),
+        "-b",
+        "white",
+        "-w",
+        "1600",
+        "-s",
+        "2",
+    ]
+    if PUPPETEER_CONFIG.is_file():
+        cmd += ["-p", str(PUPPETEER_CONFIG)]
+    proc = subprocess.run(cmd, env=env, capture_output=True, text=True, check=False)
+    if proc.returncode != 0 or not png_path.is_file():
+        sys.stderr.write(proc.stdout + "\n" + proc.stderr + "\n")
+        raise RuntimeError(f"mmdc failed to render figure {idx}")
+    return png_path.relative_to(ROOT).as_posix()
 
 
 def extract_title() -> str:
@@ -39,6 +95,10 @@ FENCE_RE = re.compile(r"^```([^\n]*)\n(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 MANUAL_SECTION_NUM = re.compile(r"^(#{1,6})[ \t]+\d+(?:\.\d+)*\.?[ \t]+", re.MULTILINE)
 NARRATIVE_MARKER = "# Narrative (from arxiv.md)"
 LEAN_MODULE_RE = re.compile(r"^###\s+(BSinMeasurementTheory(?:\.lean|/[^\s{]+))\s*$", re.MULTILINE)
+FIGURE_CAPTION_RE = re.compile(
+    r"<!--\s*figure-caption:\s*(.*?)\s*-->\s*\n```mermaid",
+    re.IGNORECASE | re.DOTALL,
+)
 
 
 def github_math_to_tex(text: str) -> str:
@@ -95,6 +155,26 @@ def lean_block_latex(code: str, listing_name: str) -> str:
     return "".join(parts)
 
 
+def parse_figure_captions(text: str) -> list[str]:
+    return [m.group(1).strip() for m in FIGURE_CAPTION_RE.finditer(text)]
+
+
+def escape_latex_caption(text: str) -> str:
+    out: list[str] = []
+    for ch in text:
+        if ch in "&%$#_{}":
+            out.append(f"\\{ch}" if ch != "}" else "\\}")
+        elif ch == "~":
+            out.append(r"\textasciitilde{}")
+        elif ch == "^":
+            out.append(r"\textasciicircum{}")
+        elif ch == "\\":
+            out.append(r"\textbackslash{}")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def extract_lean_titles(text: str) -> dict[str, str]:
     titles: dict[str, str] = {}
     lean_starts = [m.start() for m in re.finditer(r"^```lean\s*$", text, re.MULTILINE)]
@@ -109,14 +189,15 @@ def extract_lean_titles(text: str) -> dict[str, str]:
     return titles
 
 
-def replace_fences(text: str) -> tuple[str, dict[str, str]]:
+def replace_fences(text: str, figure_captions: list[str]) -> tuple[str, dict[str, str]]:
     lean_titles = extract_lean_titles(text)
     placeholders: dict[str, str] = {}
     lean_idx = 0
     other_idx = 0
+    figure_idx = 0
 
     def repl(match: re.Match[str]) -> str:
-        nonlocal lean_idx, other_idx
+        nonlocal lean_idx, other_idx, figure_idx
         lang = match.group(1).strip().lower()
         body = match.group(2)
         if lang == "lean":
@@ -127,6 +208,26 @@ def replace_fences(text: str) -> tuple[str, dict[str, str]]:
             if not safe_name.endswith(".lean"):
                 safe_name += ".lean"
             placeholders[key] = lean_block_latex(body, safe_name)
+            return f"\n\n{key}\n\n"
+        if lang == "mermaid":
+            key = f"FIGINCLUDE{other_idx:03d}"
+            rel_path = render_mermaid(body, figure_idx)
+            if figure_idx < len(figure_captions):
+                caption = figure_captions[figure_idx]
+            else:
+                caption = f"Syllabus diagram {figure_idx + 1}."
+            label = f"fig:bsmt-{figure_idx + 1:02d}"
+            figure_idx += 1
+            other_idx += 1
+            cap = escape_latex_caption(caption)
+            placeholders[key] = (
+                "\\begin{figure}[htbp]\n\\centering\n"
+                f"\\includegraphics[max width=\\linewidth,"
+                f"max totalheight=0.85\\textheight,keepaspectratio]{{{rel_path}}}\n"
+                f"\\caption{{{cap}}}\n"
+                f"\\label{{{label}}}\n"
+                "\\end{figure}\n"
+            )
             return f"\n\n{key}\n\n"
         key = f"CODEINCLUDE{other_idx:03d}"
         rel_path, _ = write_listing(body, f"snippet-{other_idx:03d}.txt")
@@ -246,6 +347,8 @@ def build_title_page(abstract_latex: str) -> str:
         \\maketitle
         \\tableofcontents
         \\clearpage
+        \\listoffigures
+        \\clearpage
         """
     ).strip()
 
@@ -254,18 +357,20 @@ def main() -> int:
     if not SRC.is_file():
         print(f"error: missing {SRC}; run scripts/generate_arxiv_with_code.sh first", file=sys.stderr)
         return 1
-    if LISTINGS_DIR.exists():
-        for path in LISTINGS_DIR.iterdir():
-            if path.is_file():
-                path.unlink()
-    LISTINGS_DIR.mkdir(parents=True, exist_ok=True)
+    for d in (LISTINGS_DIR, FIGURES_DIR):
+        if d.exists():
+            for path in d.iterdir():
+                if path.is_file():
+                    path.unlink()
+        d.mkdir(parents=True, exist_ok=True)
 
     body = drop_github_nav(SRC.read_text(encoding="utf-8"))
+    figure_captions = parse_figure_captions(body)
     body = strip_html_comments(body)
     abstract_md, body = extract_abstract(body)
     body = strip_manual_section_numbers(body)
     body = github_math_to_tex(body)
-    body, placeholders = replace_fences(body)
+    body, placeholders = replace_fences(body, figure_captions)
 
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)
@@ -285,7 +390,11 @@ def main() -> int:
     )
     OUT.write_text(document, encoding="utf-8")
     n_listings = sum(1 for p in LISTINGS_DIR.iterdir() if p.is_file())
-    print(f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes, {n_listings} listings)")
+    n_figures = sum(1 for p in FIGURES_DIR.glob("*.png"))
+    print(
+        f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size:,} bytes, "
+        f"{n_listings} listings, {n_figures} mermaid figures)"
+    )
     return 0
 
 

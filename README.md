@@ -50,6 +50,156 @@ The pin is `leanprover/lean4:v4.34.0-rc1`.
 | 6 | [21-410 / 21-599](courses/21-410-21-599.md) | Independent Study | Full reconstruction of the infinite-algebra extension of Theorem 4.1 |
 | 6 | [21-322](courses/21-322.md) | Topics in Formal Mathematics | Proof that the finite atomic picture is what the infinite machinery reduces to |
 
+The conceptual buildup of that sequence is Figure 1. The Mathlib
+subsections required to read each course's Lean are Figure 2. The Lean
+library does not import across courses.
+
+<!-- figure-caption: Conceptual buildup of the reconstructed 21-xxx syllabus toward Scott (1964). Blue nodes are courses, grouped by phase. -->
+```mermaid
+%%{init: {"flowchart": {"htmlLabels": false, "nodeSpacing": 24, "rankSpacing": 40}}}%%
+flowchart TB
+  classDef course fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:1.2px
+
+  subgraph P1["Phase 1"]
+    C120["21-120 / 21-122"]:::course
+    C127["21-127"]:::course
+    C241["21-241"]:::course
+    C228["21-228"]:::course
+  end
+
+  subgraph P2["Phase 2"]
+    C355["21-355"]:::course
+    C373["21-373"]:::course
+    C321["21-321"]:::course
+  end
+
+  subgraph P3["Phase 3"]
+    C292["21-292"]:::course
+    C329["21-329"]:::course
+  end
+
+  subgraph P4["Phase 4"]
+    C651["21-651"]:::course
+    C720["21-720"]:::course
+  end
+
+  subgraph P5["Phase 5"]
+    C640["21-640"]:::course
+  end
+
+  subgraph P6["Phase 6"]
+    C410["21-410 / 21-599"]:::course
+    C322["21-322"]:::course
+  end
+
+  C241 --> C292
+  C241 --> C321
+  C228 --> C321
+  C127 --> C321
+  C292 --> C321
+  C120 --> C355
+  C355 --> C720
+  C373 --> C651
+  C329 --> C651
+  C651 --> C720
+  C241 --> C640
+  C355 --> C640
+  C329 --> C410
+  C651 --> C410
+  C720 --> C410
+  C640 --> C410
+  C373 --> C322
+  C321 --> C322
+  C410 --> C322
+```
+
+<!-- figure-caption: Mathlib subsections required to read each course. Orange nodes are Mathlib; blue nodes are courses. -->
+```mermaid
+%%{init: {"flowchart": {"htmlLabels": false, "nodeSpacing": 18, "rankSpacing": 50}}}%%
+flowchart LR
+  classDef course fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:1.2px
+  classDef mathlib fill:#fff7ed,stroke:#c2410c,color:#7c2d12,stroke-width:1.2px
+
+  subgraph ML["Mathlib subsections"]
+    direction TB
+    mlCalc["Analysis.Calculus"]:::mathlib
+    mlInt["MeasureTheory.Integral"]:::mathlib
+    mlTrig["Analysis.SpecialFunctions"]:::mathlib
+    mlLimsup["Order.LiminfLimsup"]:::mathlib
+    mlIPS["Analysis.InnerProductSpace"]:::mathlib
+    mlNS["Analysis.NormedSpace"]:::mathlib
+    mlMeas["MeasureTheory"]:::mathlib
+    mlCpct["Topology.Compactness"]:::mathlib
+    mlCMap["Topology.ContinuousMap"]:::mathlib
+    mlLin["LinearAlgebra"]:::mathlib
+    mlLMap["Algebra.Module.LinearMap"]:::mathlib
+    mlRing["Algebra.Order.Ring"]:::mathlib
+    mlBig["Algebra.BigOperators"]:::mathlib
+    mlBA["Order.BooleanAlgebra"]:::mathlib
+    mlZorn["Order.Zorn"]:::mathlib
+    mlFilt["Order.Filter"]:::mathlib
+    mlRat["Data.Rat / Quotient"]:::mathlib
+    mlWF["Order.WellFounded"]:::mathlib
+    mlPerm["Data.Fintype.Perm"]:::mathlib
+    mlCard["SetTheory.Cardinal"]:::mathlib
+  end
+
+  subgraph CR["Courses"]
+    direction TB
+    C120["21-120 / 21-122"]:::course
+    C127["21-127"]:::course
+    C241["21-241"]:::course
+    C228["21-228"]:::course
+    C355["21-355"]:::course
+    C373["21-373"]:::course
+    C321["21-321"]:::course
+    C292["21-292"]:::course
+    C329["21-329"]:::course
+    C651["21-651"]:::course
+    C720["21-720"]:::course
+    C640["21-640"]:::course
+    C410["21-410 / 21-599"]:::course
+    C322["21-322"]:::course
+  end
+
+  mlCalc --> C120
+  mlInt --> C120
+  mlTrig --> C120
+  mlRat --> C127
+  mlWF --> C127
+  mlLin --> C241
+  mlIPS --> C241
+  mlLMap --> C241
+  mlPerm --> C228
+  mlBig --> C228
+  mlLimsup --> C355
+  mlCpct --> C355
+  mlBA --> C373
+  mlBig --> C373
+  mlLMap --> C321
+  mlRing --> C321
+  mlBig --> C321
+  mlRing --> C292
+  mlLin --> C292
+  mlZorn --> C329
+  mlFilt --> C329
+  mlCard --> C329
+  mlBA --> C651
+  mlCMap --> C651
+  mlCpct --> C651
+  mlCMap --> C720
+  mlBA --> C720
+  mlMeas --> C720
+  mlNS --> C640
+  mlLMap --> C640
+  mlBA --> C410
+  mlBig --> C410
+  mlMeas --> C410
+  mlBA --> C322
+  mlCMap --> C322
+  mlMeas --> C322
+```
+
 ## Build
 
 ```bash

@@ -3,5 +3,5 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 echo "==> Regenerating arxiv_with_code.md"
 bash scripts/generate_arxiv_with_code.sh
-echo "==> Building arxiv.tex + lean-listings/"
+echo "==> Building arxiv.tex + lean-listings/ + figures/"
 python3 scripts/build_arxiv_tex.py
