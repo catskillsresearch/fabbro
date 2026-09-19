@@ -95,6 +95,7 @@ FENCE_RE = re.compile(r"^```([^\n]*)\n(.*?)^```\s*$", re.MULTILINE | re.DOTALL)
 MANUAL_SECTION_NUM = re.compile(r"^(#{1,6})[ \t]+\d+(?:\.\d+)*\.?[ \t]+", re.MULTILINE)
 NARRATIVE_MARKER = "# Narrative (from arxiv.md)"
 LEAN_MODULE_RE = re.compile(r"^###\s+(BSinMeasurementTheory(?:\.lean|/[^\s{]+))\s*$", re.MULTILINE)
+LEAN_PATH_RE = re.compile(r"<!--\s*lean:\s*(\S+?)\s*-->")
 FIGURE_CAPTION_RE = re.compile(
     r"<!--\s*figure-caption:\s*(.*?)\s*-->\s*\n```mermaid",
     re.IGNORECASE | re.DOTALL,
@@ -138,7 +139,24 @@ def write_listing(code: str, listing_name: str) -> tuple[str, int]:
     return listing_path.relative_to(ROOT).as_posix(), (len(source.splitlines()) if source else 0)
 
 
-def lean_block_latex(code: str, listing_name: str) -> str:
+def github_blob_url(rel: str, first: int | None = None, last: int | None = None) -> str:
+    url = f"{GITHUB_URL}/blob/main/{rel}"
+    if first is not None and last is not None:
+        url += f"\\#L{first}-L{last}"
+    return url
+
+
+def lean_label_tex(label: str, github_rel: str | None, first: int, last: int, line_count: int) -> str:
+    if not github_rel:
+        return f"\\textcolor{{green!40!black}}{{\\textbf{{{label}}}}}"
+    if first == 1 and last == line_count:
+        url = github_blob_url(github_rel)
+    else:
+        url = github_blob_url(github_rel, first, last)
+    return f"\\leansourcehref{{{url}}}{{{label}}}"
+
+
+def lean_block_latex(code: str, listing_name: str, github_rel: str | None = None) -> str:
     rel_path, line_count = write_listing(code, listing_name)
     ranges = chunk_line_ranges(line_count, LISTING_CHUNK_LINES)
     parts: list[str] = []
@@ -147,7 +165,7 @@ def lean_block_latex(code: str, listing_name: str) -> str:
         firstlast = "" if first == 1 and last == line_count else f",firstline={first},lastline={last}"
         parts.append(
             "\\vspace{0.5\\baselineskip}\n"
-            f"\\noindent\\textcolor{{green!40!black}}{{\\textbf{{{label}}}}}"
+            f"\\noindent{lean_label_tex(label, github_rel, first, last, line_count)}"
             "\\par\\vspace{0.25\\baselineskip}\n"
             f"\\lstinputlisting[style=leanbox{firstlast}]{{{rel_path}}}\n"
             "\\vspace{0.5\\baselineskip}\n\n"
@@ -180,17 +198,24 @@ def extract_lean_titles(text: str) -> dict[str, str]:
     lean_starts = [m.start() for m in re.finditer(r"^```lean\s*$", text, re.MULTILINE)]
     for idx, pos in enumerate(lean_starts):
         module = None
-        for line in reversed(text[:pos].rstrip("\n").splitlines()[-4:]):
-            m = LEAN_MODULE_RE.match(line.strip())
-            if m:
-                module = m.group(1)
+        for line in reversed(text[:pos].rstrip("\n").splitlines()[-6:]):
+            stripped = line.strip()
+            path_m = LEAN_PATH_RE.match(stripped)
+            if path_m:
+                module = path_m.group(1)
+                break
+            heading_m = LEAN_MODULE_RE.match(stripped)
+            if heading_m:
+                module = heading_m.group(1)
                 break
         titles[f"LEANINCLUDE{idx:03d}"] = module or f"module-{idx + 1}"
     return titles
 
 
-def replace_fences(text: str, figure_captions: list[str]) -> tuple[str, dict[str, str]]:
-    lean_titles = extract_lean_titles(text)
+def replace_fences(
+    text: str, figure_captions: list[str], lean_titles: dict[str, str] | None = None
+) -> tuple[str, dict[str, str]]:
+    lean_titles = lean_titles if lean_titles is not None else extract_lean_titles(text)
     placeholders: dict[str, str] = {}
     lean_idx = 0
     other_idx = 0
@@ -204,10 +229,11 @@ def replace_fences(text: str, figure_captions: list[str]) -> tuple[str, dict[str
             key = f"LEANINCLUDE{lean_idx:03d}"
             module = lean_titles.get(key, f"module-{lean_idx}")
             lean_idx += 1
+            github_rel = module if module.startswith("BSinMeasurementTheory") else None
             safe_name = module.replace("/", "-")
             if not safe_name.endswith(".lean"):
                 safe_name += ".lean"
-            placeholders[key] = lean_block_latex(body, safe_name)
+            placeholders[key] = lean_block_latex(body, safe_name, github_rel)
             return f"\n\n{key}\n\n"
         if lang == "mermaid":
             key = f"FIGINCLUDE{other_idx:03d}"
@@ -368,11 +394,12 @@ def main() -> int:
 
     body = drop_github_nav(SRC.read_text(encoding="utf-8"))
     figure_captions = parse_figure_captions(body)
+    lean_titles = extract_lean_titles(body)
     body = strip_html_comments(body)
     abstract_md, body = extract_abstract(body)
     body = strip_manual_section_numbers(body)
     body = github_math_to_tex(body)
-    body, placeholders = replace_fences(body, figure_captions)
+    body, placeholders = replace_fences(body, figure_captions, lean_titles)
 
     latex_body = pandoc_to_latex(body, shift=True)
     latex_body = inject_placeholders(latex_body, placeholders)

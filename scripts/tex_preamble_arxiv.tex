@@ -25,6 +25,12 @@
 \usepackage{xurl}
 \usepackage[colorlinks=true,linkcolor=blue!40!black,citecolor=blue!40!black,urlcolor=blue!40!black]{hyperref}
 \emergencystretch=2em
+\newcommand{\leansourcehref}[2]{%
+  \begingroup
+  \hypersetup{urlcolor=green!40!black}%
+  \href{#1}{\textbf{#2}}%
+  \endgroup
+}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{axiom}[theorem]{Axiom}

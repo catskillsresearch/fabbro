@@ -143,7 +143,7 @@ flowchart TB
 
 <!-- figure-caption: Mathlib subsections required to read each course. Orange nodes are Mathlib; blue nodes are courses. -->
 ```mermaid
-%%{init: {"flowchart": {"htmlLabels": false, "nodeSpacing": 18, "rankSpacing": 50}}}%%
+%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 18, "rankSpacing": 50}}}%%
 flowchart LR
   classDef course fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:1.2px
   classDef mathlib fill:#fff7ed,stroke:#c2410c,color:#7c2d12,stroke-width:1.2px
@@ -176,20 +176,20 @@ flowchart LR
   subgraph CR["Courses"]
     direction TB
     style CR fill:#eff6ff,stroke:#1d4ed8,stroke-width:2px
-    C120["21-120 / 21-122"]:::course
-    C127["21-127"]:::course
-    C241["21-241"]:::course
-    C228["21-228"]:::course
-    C355["21-355"]:::course
-    C373["21-373"]:::course
-    C321["21-321"]:::course
-    C292["21-292"]:::course
-    C329["21-329"]:::course
-    C651["21-651"]:::course
-    C720["21-720"]:::course
-    C640["21-640"]:::course
-    C410["21-410 / 21-599"]:::course
-    C322["21-322"]:::course
+    C120["21-120 / 21-122<br/>Differential and Integral Calculus / Integration and Approximation"]:::course
+    C127["21-127<br/>Concepts of Mathematics"]:::course
+    C241["21-241<br/>Matrices and Linear Transformations"]:::course
+    C228["21-228<br/>Discrete Mathematics"]:::course
+    C355["21-355<br/>Principles of Real Analysis I"]:::course
+    C373["21-373<br/>Algebraic Structures"]:::course
+    C321["21-321<br/>Interactive Theorem Proving"]:::course
+    C292["21-292<br/>Operations Research I"]:::course
+    C329["21-329<br/>Set Theory"]:::course
+    C651["21-651<br/>General Topology"]:::course
+    C720["21-720<br/>Measure and Integration"]:::course
+    C640["21-640<br/>Introduction to Functional Analysis"]:::course
+    C410["21-410 / 21-599<br/>Independent Study"]:::course
+    C322["21-322<br/>Topics in Formal Mathematics"]:::course
   end
 
   mlCalc --> C120
