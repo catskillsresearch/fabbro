@@ -17,7 +17,8 @@ math.LO.
 This report presents a reconstructed Carnegie Mellon undergraduate path
 through the Mathematical Sciences 21-xxx catalog, sequenced so that Dana
 Scott's 1964 measurement theorems (1.1--4.1) and their extension to infinite
-Boolean algebras can be proved end to end. Each course contributes one
+Boolean algebras can be read for understanding after these courses are taken
+and proved end to end. Each course contributes one
 problem that requires the full toolkit of that course rather than a single
 technique in isolation. Solutions are written in English and then formalized
 in Lean 4 / Mathlib. The accompanying library `BSinMeasurementTheory` is
@@ -28,6 +29,20 @@ checked by Lean's kernel. The complete source and a reproducible build
 pipeline are publicly available with this report.
 
 ## Introduction
+
+Imagine that a first-year student at Carnegie Mellon told their faculty advisor that their goal 
+for their undergraduate degree was to be able to read a paper on Measurement Theory
+written by Dana Scott in 1964.  This report is an example of responsible answer to that question,
+generated with help of large language models. It turns out to be a map of Scott's own
+undergraduate training. It is a model of highly individually 
+tailored automated advisement to ensure that the student will master the skills
+needed to read the paper for understanding and be able, in turn, to reproduce and 
+teach the ideas and proofs it contains to themselves and others.  This is a level 
+of advising intended to augment and improve on typical standards of advice received
+by undergraduates.  The selection of Scott's 1964 paper is not intended to recommend an actual degree
+program in Measurement Theory, but to illustrate this unique AI-assisted advisement
+tool.  The tool idea is not a criticism of current advisement practices, just a unique
+way to augment it.
 
 Measurement theory asks when qualitative comparisons can be represented by
 real numbers. Scott's 1964 paper organizes several such representation
@@ -44,7 +59,7 @@ do real work. The syllabus below is that ordering. It is framed as a
 Bachelor of Science in Measurement Theory: not a new degree program, but a
 reading of the existing catalog as a single connected proof.
 
-The student of record for the problem set is Giovanni Fabbro. Each problem
+Each problem
 is built so that quoting a theorem from a later course is not available: the
 calculus problem uses the fundamental theorem, comparison, and Taylor
 remainders; the linear-algebra problem speaks the dual-space language of
