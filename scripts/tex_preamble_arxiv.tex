@@ -31,6 +31,15 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 
+% Display-style level-4 headings, numbered 3.1.2.a rather than 3.1.2.1 (a).
+\renewcommand{\theparagraph}{\thesubsubsection.\alph{paragraph}}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {1.25ex \@plus 1ex \@minus .2ex}%
+  {0.6ex \@plus .1ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
 % Source-to-Lean concordance cards.  The Markdown source remains readable on
 % GitHub; build_arxiv_tex.py turns hidden card markers into this breakable box.
 % Scott writes a circled order relation; \textcircled is a text command.

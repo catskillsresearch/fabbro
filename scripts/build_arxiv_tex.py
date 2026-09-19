@@ -238,7 +238,8 @@ def build_title_page(abstract_latex: str) -> str:
           pdfkeywords={{Lean 4, formal verification, measurement theory, undergraduate curriculum}}
         }}
 
-        \\setcounter{{tocdepth}}{{2}}
+        \\setcounter{{secnumdepth}}{{4}}
+        \\setcounter{{tocdepth}}{{4}}
 
         \\begin{{document}}
 

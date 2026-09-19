@@ -410,20 +410,32 @@ def ensure_blank_before_headings(text: str) -> str:
 
 
 def flatten_deep_headings(text: str) -> str:
-    """Headings at five or six hashes become bold run-ins; Pandoc will not
-    treat them as headings after a paragraph, and they print as raw ######."""
+    """Six-hash headings become bold run-ins. Five-hash headings are
+    kept so course `### (a)` parts survive as level-4 paragraphs."""
 
     def repl(match: re.Match[str]) -> str:
         return f"**{match.group(1).strip()}**\n\n"
 
-    return re.sub(r"^#{5,6}[ \t]+(.+)$", repl, text, flags=re.MULTILINE)
+    return re.sub(r"^#{6}[ \t]+(.+)$", repl, text, flags=re.MULTILINE)
+
+
+def strip_horizontal_rules(text: str) -> str:
+    return re.sub(r"^---\s*$", "", text, flags=re.MULTILINE)
+
+
+def strip_part_letters(text: str) -> str:
+    """Drop leading (a)/(b)/(c) from headings; the PDF numbers those levels
+    as 3.1.2.a, so the letter in the title is redundant."""
+    return re.sub(r"^(#{1,6}[ \t]+)\([a-z]\)[ \t]+", r"\1", text, flags=re.MULTILINE)
 
 
 def course_body(rel: str) -> str:
     text = (ROOT / "courses" / rel).read_text(encoding="utf-8")
     text = rewrite_lean_links(text)
+    text = strip_horizontal_rules(text)
     text = demote_headings(text, 2)
     text = flatten_deep_headings(text)
+    text = strip_part_letters(text)
     text = ensure_blank_before_headings(text)
     return text.strip() + "\n"
 
