@@ -346,8 +346,10 @@ def replace_fences(
             figure_idx += 1
             other_idx += 1
             cap = escape_latex_caption(caption)
+            # Keep per-solution module maps under the Solution heading.
+            placement = "H" if "Solution modules" in body else "htbp"
             placeholders[key] = (
-                "\\begin{figure}[htbp]\n\\centering\n"
+                f"\\begin{{figure}}[{placement}]\n\\centering\n"
                 f"{figure_include_latex(rel_path, hotspots)}"
                 f"\\caption{{{cap}}}\n"
                 f"\\label{{{label}}}\n"
