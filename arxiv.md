@@ -84,40 +84,40 @@ library does not import across courses.
 
 <!-- figure-caption: Conceptual buildup of the reconstructed 21-xxx syllabus toward Scott (1964). Blue nodes are courses, grouped by phase. -->
 ```mermaid
-%%{init: {"flowchart": {"htmlLabels": false, "nodeSpacing": 24, "rankSpacing": 40}}}%%
+%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 24, "rankSpacing": 40}}}%%
 flowchart TB
   classDef course fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:1.2px
 
   subgraph P1["Phase 1"]
-    C120["21-120 / 21-122"]:::course
-    C127["21-127"]:::course
-    C241["21-241"]:::course
-    C228["21-228"]:::course
+    C120["21-120 / 21-122<br/>Calculus"]:::course
+    C127["21-127<br/>Concepts of Mathematics"]:::course
+    C241["21-241<br/>Matrices and Linear Transformations"]:::course
+    C228["21-228<br/>Discrete Mathematics"]:::course
   end
 
   subgraph P2["Phase 2"]
-    C355["21-355"]:::course
-    C373["21-373"]:::course
-    C321["21-321"]:::course
+    C355["21-355<br/>Real Analysis"]:::course
+    C373["21-373<br/>Algebraic Structures"]:::course
+    C321["21-321<br/>Interactive Theorem Proving"]:::course
   end
 
   subgraph P3["Phase 3"]
-    C292["21-292"]:::course
-    C329["21-329"]:::course
+    C292["21-292<br/>Operations Research"]:::course
+    C329["21-329<br/>Set Theory"]:::course
   end
 
   subgraph P4["Phase 4"]
-    C651["21-651"]:::course
-    C720["21-720"]:::course
+    C651["21-651<br/>General Topology"]:::course
+    C720["21-720<br/>Measure and Integration"]:::course
   end
 
   subgraph P5["Phase 5"]
-    C640["21-640"]:::course
+    C640["21-640<br/>Functional Analysis"]:::course
   end
 
   subgraph P6["Phase 6"]
-    C410["21-410 / 21-599"]:::course
-    C322["21-322"]:::course
+    C410["21-410 / 21-599<br/>Independent Study"]:::course
+    C322["21-322<br/>Formal Mathematics"]:::course
   end
 
   C241 --> C292
