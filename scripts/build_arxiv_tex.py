@@ -239,11 +239,20 @@ def write_listing(code: str, listing_name: str) -> tuple[str, int]:
     return listing_path.relative_to(ROOT).as_posix(), (len(source.splitlines()) if source else 0)
 
 
+LIB_PREFIX = "BSinMeasurementTheory/"
+
+
 def github_blob_url(rel: str, first: int | None = None, last: int | None = None) -> str:
     url = f"{GITHUB_URL}/blob/main/{rel}"
     if first is not None and last is not None:
         url += f"\\#L{first}-L{last}"
     return url
+
+
+def lean_display_path(rel: str) -> str:
+    if rel.startswith(LIB_PREFIX):
+        return rel[len(LIB_PREFIX) :]
+    return rel
 
 
 def lean_label_tex(label: str, github_rel: str | None, first: int, last: int, line_count: int) -> str:
@@ -261,7 +270,11 @@ def lean_block_latex(code: str, listing_name: str, github_rel: str | None = None
     ranges = chunk_line_ranges(line_count, LISTING_CHUNK_LINES)
     parts: list[str] = []
     for first, last in ranges:
-        label = "Lean 4 source" if first == 1 and last == line_count else f"Lean 4 source (lines {first}--{last})"
+        label = "Lean 4 source"
+        if github_rel:
+            label += f" \\texttt{{{escape_latex_caption(lean_display_path(github_rel))}}}"
+        if not (first == 1 and last == line_count):
+            label += f" (lines {first}--{last})"
         firstlast = "" if first == 1 and last == line_count else f",firstline={first},lastline={last}"
         parts.append(
             "\\vspace{0.5\\baselineskip}\n"
