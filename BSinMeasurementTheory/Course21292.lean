@@ -1,3 +1,8 @@
 import BSinMeasurementTheory.Course21292.LinearProgram
 import BSinMeasurementTheory.Course21292.WeakDuality
+import BSinMeasurementTheory.Course21292.StrongDuality
+import BSinMeasurementTheory.Course21292.ScottInstance
+import BSinMeasurementTheory.Course21292.DualFormulation
+import BSinMeasurementTheory.Course21292.Simplex
 import BSinMeasurementTheory.Course21292.Instance
+import BSinMeasurementTheory.Course21292.Scott11

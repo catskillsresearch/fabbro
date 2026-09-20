@@ -1,4 +1,6 @@
 import BSinMeasurementTheory.Course21241.Space
+import BSinMeasurementTheory.Course21241.PrimalBasis
+import BSinMeasurementTheory.Course21241.DualBasis
 import BSinMeasurementTheory.Course21241.Basis
 import BSinMeasurementTheory.Course21241.Separation
 import BSinMeasurementTheory.Course21241.DualCone

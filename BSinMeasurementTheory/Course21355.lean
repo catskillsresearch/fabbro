@@ -1,3 +1,6 @@
+import BSinMeasurementTheory.Course21355.Completeness
+import BSinMeasurementTheory.Course21355.MonotoneConvergence
+import BSinMeasurementTheory.Course21355.PeakPoints
 import BSinMeasurementTheory.Course21355.BolzanoWeierstrass
 import BSinMeasurementTheory.Course21355.TailExtremes
 import BSinMeasurementTheory.Course21355.LimsupLiminfExist

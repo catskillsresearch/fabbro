@@ -6,4 +6,3 @@ import BSinMeasurementTheory.Course21410.RestrictToB
 import BSinMeasurementTheory.Course21410.Representation
 import BSinMeasurementTheory.Course21410.Glue
 import BSinMeasurementTheory.Course21410.Numerical
-import BSinMeasurementTheory.Course21410.Formalization

@@ -210,6 +210,60 @@ FILE_BLURBS: dict[str, str] = {
         "Exact value and four-decimal rounding of T9 at 1/2.",
     "BSinMeasurementTheory/Course21120/TaylorError.lean":
         "Alternating-series tail bound for the degree-9 truncation.",
+    "BSinMeasurementTheory/Course21120/Summary.lean":
+        "Summary of the four Lean checks for the degree-9 estimate.",
+    "BSinMeasurementTheory/Course21241/PrimalBasis.lean":
+        "Standard primal basis of three-space: spanning and independence.",
+    "BSinMeasurementTheory/Course21241/DualBasis.lean":
+        "Dual basis functionals and the dual expansion of a linear map.",
+    "BSinMeasurementTheory/Course21228/ValidPair.lean":
+        "Permutation pairs that make two sequences agree termwise.",
+    "BSinMeasurementTheory/Course21228/Genericity.lean":
+        "Pairwise distinctness and multiset compatibility of two sequences.",
+    "BSinMeasurementTheory/Course21355/Completeness.lean":
+        "Least-upper-bound property of the reals.",
+    "BSinMeasurementTheory/Course21355/MonotoneConvergence.lean":
+        "Monotone convergence for bounded real sequences.",
+    "BSinMeasurementTheory/Course21355/PeakPoints.lean":
+        "Peak-point construction of a monotonic subsequence.",
+    "BSinMeasurementTheory/Course21292/StrongDuality.lean":
+        "Strong duality in certificate form from weak duality.",
+    "BSinMeasurementTheory/Course21292/ScottInstance.lean":
+        "The concrete 3x3 Scott-type linear program.",
+    "BSinMeasurementTheory/Course21292/DualFormulation.lean":
+        "Dual objective and dual constraints of the 3x3 instance.",
+    "BSinMeasurementTheory/Course21292/Simplex.lean":
+        "Optimal primal and dual vertices of the 3x3 instance.",
+    "BSinMeasurementTheory/Course21292/Scott11.lean":
+        "Scott's Theorem 1.1 from primal feasibility versus a dual witness.",
+    "BSinMeasurementTheory/Course21720/Riesz.lean":
+        "Comparison and boundedness used by the Riesz representation.",
+    "BSinMeasurementTheory/Course21640/PreciseStatement.lean":
+        "Precise statement of Hahn-Banach dominated extension.",
+    "BSinMeasurementTheory/Course21640/RoleOfSublinear.lean":
+        "One-step bounds that make the sublinear functional usable.",
+    "BSinMeasurementTheory/Course21640/NormSublinear.lean":
+        "The sublinear functional p(f) = C ||f||.",
+    "BSinMeasurementTheory/Course21640/Dominance.lean":
+        "Dominance of a positive functional by the norm bound on a subspace.",
+    "BSinMeasurementTheory/Course21640/ApplyHahnBanach.lean":
+        "Application of dominated extension to the norm bound.",
+    "BSinMeasurementTheory/Course21640/PositiveExtension.lean":
+        "A dominated extension that fixes the unit is positive.",
+    "BSinMeasurementTheory/Course21640/Scott41.lean":
+        "Restriction of the positive extension recovers the original assignment.",
+    "BSinMeasurementTheory/Course21410/StoneSpace.lean":
+        "Stone space of a Boolean algebra and its basic clopens.",
+    "BSinMeasurementTheory/Course21410/StepFunctions.lean":
+        "Stone indicators, the nonnegative cone, and preference differences.",
+    "BSinMeasurementTheory/Course21410/PositiveExtension.lean":
+        "Positivity and preference agreement for a Stone-space functional.",
+    "BSinMeasurementTheory/Course21410/RestrictToB.lean":
+        "Restriction of a Stone-space functional back to B.",
+    "BSinMeasurementTheory/Course21410/Representation.lean":
+        "The restricted functional is a monotone assignment on B.",
+    "BSinMeasurementTheory/Course21410/Formalization.lean":
+        "Umbrella importer for the infinite-algebra extension modules.",
     "BSinMeasurementTheory/Course21120Taylor.lean":
         "Umbrella importer for the Taylor-expansion modules.",
     "BSinMeasurementTheory/Course21241/PointV.lean":
