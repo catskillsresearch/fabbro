@@ -1,4 +1,10 @@
-import Mathlib
+import Mathlib.Analysis.Normed.Group.Real
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Data.Real.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+import Mathlib.Tactic.Linarith
 import BSinMeasurementTheory.Course21120.Existence
 
 open Real intervalIntegral

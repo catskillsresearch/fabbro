@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21322.MeasureCollapse
 
 open scoped BigOperators Classical

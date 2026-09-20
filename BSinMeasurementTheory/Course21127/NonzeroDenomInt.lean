@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Data.Int.Basic
+import Mathlib.Data.Setoid.Basic
+import Mathlib.Tactic.Ring
 
 namespace Course21127
 

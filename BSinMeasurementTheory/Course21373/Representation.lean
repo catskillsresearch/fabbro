@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Order.BooleanAlgebra.Basic
 import BSinMeasurementTheory.Course21373.AtomJoin
 
 open Finset

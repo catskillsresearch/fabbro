@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Rat.Defs
 import BSinMeasurementTheory.Course21292.LinearProgram
 
 open scoped BigOperators

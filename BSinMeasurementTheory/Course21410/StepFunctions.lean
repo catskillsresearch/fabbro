@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.BooleanAlgebra.Basic
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21410.StoneSpace
 
 namespace Course21410

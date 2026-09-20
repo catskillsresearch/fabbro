@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.BooleanAlgebra.Basic
 import BSinMeasurementTheory.Course21410.StepFunctions
 
 namespace Course21410

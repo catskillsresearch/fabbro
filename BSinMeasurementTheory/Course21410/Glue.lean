@@ -1,4 +1,12 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.BooleanAlgebra
+import Mathlib.Data.Set.Disjoint
+import Mathlib.Order.Disjoint
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 import BSinMeasurementTheory.Course21410.Measure
 
 open scoped BigOperators Classical

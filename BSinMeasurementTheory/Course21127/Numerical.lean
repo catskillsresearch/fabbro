@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21127.NonzeroDenomInt
 import BSinMeasurementTheory.Course21127.ToRat
 

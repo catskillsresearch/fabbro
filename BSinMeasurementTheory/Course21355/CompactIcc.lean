@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Interval.Set.Basic
+import Mathlib.Topology.Order.Compact
+import Mathlib.Topology.UniformSpace.Real
 
 namespace Course21355
 

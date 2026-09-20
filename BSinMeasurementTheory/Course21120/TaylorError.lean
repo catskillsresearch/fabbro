@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21120.TaylorExpansion
 
 namespace Course21120Taylor

@@ -1,4 +1,11 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.Algebra.Module.Pi
+import Mathlib.Data.Real.Basic
+import Mathlib.LinearAlgebra.LinearIndependent.Defs
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Ring
 import BSinMeasurementTheory.Course21241.Space
 
 open BigOperators

@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Order.BooleanAlgebra.Basic
 import BSinMeasurementTheory.Course21410.RestrictToB
 
 namespace Course21410

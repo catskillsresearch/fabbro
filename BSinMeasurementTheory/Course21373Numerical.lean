@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 namespace Course21373Numerical
 
 /-! ### Numerical / Computational Example -/

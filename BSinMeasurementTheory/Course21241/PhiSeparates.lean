@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21241.DotAtV
 import BSinMeasurementTheory.Course21241.DotOnC
 

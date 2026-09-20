@@ -1,4 +1,8 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Rat.Defs
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 
 open scoped BigOperators
 

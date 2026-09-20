@@ -1,4 +1,14 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.LinearAlgebra.Basis.Basic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 import BSinMeasurementTheory.Course21241.Basis
 
 open BigOperators

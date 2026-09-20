@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Order.BooleanAlgebra.Basic
+import Mathlib.Topology.Connected.TotallyDisconnected
+import Mathlib.Topology.ContinuousMap.Compact
 import BSinMeasurementTheory.Course21651.BooleanHom
 
 set_option linter.unusedSectionVars false

@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Order.BoundedOrder.Basic
+import Mathlib.Order.Filter.Ultrafilter.Basic
+import Mathlib.Order.Lattice
 
 universe u
 

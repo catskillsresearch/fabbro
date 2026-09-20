@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Data.Rat.Defs
 
 open scoped BigOperators
 

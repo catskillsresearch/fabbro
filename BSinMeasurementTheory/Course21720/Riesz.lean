@@ -1,4 +1,11 @@
-import Mathlib
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
+import Mathlib.Tactic.Positivity
+import Mathlib.Topology.Basic
+import Mathlib.Topology.ContinuousMap.Basic
+import Mathlib.Topology.ContinuousMap.Compact
 import BSinMeasurementTheory.Course21720.Boundedness
 
 namespace Course21720

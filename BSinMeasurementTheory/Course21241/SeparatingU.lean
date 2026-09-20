@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.LinearAlgebra.Basis.Basic
 import BSinMeasurementTheory.Course21241.Basis
 
 namespace Course21241

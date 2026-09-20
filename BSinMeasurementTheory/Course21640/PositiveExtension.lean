@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Data.Real.Basic
 import BSinMeasurementTheory.Course21640.ApplyHahnBanach
 import BSinMeasurementTheory.Course21640.Positivity
 

@@ -1,4 +1,3 @@
-import Mathlib
 import BSinMeasurementTheory.Course21651.StoneMap
 
 set_option linter.unusedSectionVars false

@@ -1,4 +1,9 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Algebra.Module.Submodule.LinearMap
+import Mathlib.Data.Real.Basic
+import Mathlib.GroupTheory.GroupAction.Ring
+import Mathlib.Tactic.FinCases
 import BSinMeasurementTheory.Course21241.PrimalBasis
 
 open BigOperators

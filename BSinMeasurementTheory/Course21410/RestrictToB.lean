@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.BooleanAlgebra.Basic
 import BSinMeasurementTheory.Course21410.PositiveExtension
 
 namespace Course21410

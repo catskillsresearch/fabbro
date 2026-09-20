@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.Algebra.Module.Basic
+import Mathlib.Algebra.Module.LinearMap.Basic
+import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Data.Real.Basic
 import BSinMeasurementTheory.Course21640.Sublinear
 
 namespace Course21640

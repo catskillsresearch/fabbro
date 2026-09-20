@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Fintype.Basic
 import BSinMeasurementTheory.Course21322.Hom
 
 open scoped BigOperators Classical

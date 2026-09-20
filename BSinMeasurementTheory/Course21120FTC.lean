@@ -1,4 +1,15 @@
-import Mathlib
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Complex.Trigonometric
+import Mathlib.Analysis.Normed.Group.Real
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Data.Real.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+import Mathlib.Tactic.Linarith
+import Mathlib.Topology.Basic
+import Mathlib.Topology.Continuous
+import Mathlib.Topology.UniformSpace.Real
 
 open Real intervalIntegral MeasureTheory
 

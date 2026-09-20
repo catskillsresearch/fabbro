@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Data.Rat.Defs
 
 namespace Course21120Taylor
 

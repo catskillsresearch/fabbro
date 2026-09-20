@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Tactic.NormNum
 import BSinMeasurementTheory.Course21241.Space
 
 namespace Course21241

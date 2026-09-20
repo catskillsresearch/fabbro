@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Data.Set.Basic
+import Mathlib.Order.BooleanAlgebra.Basic
+import Mathlib.Topology.Basic
 
 set_option linter.unusedSectionVars false
 

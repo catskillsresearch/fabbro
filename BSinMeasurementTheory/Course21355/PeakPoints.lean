@@ -1,4 +1,9 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.Finite.Basic
+import Mathlib.Order.Interval.Finset.Defs
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Order.Interval.Set.Basic
+import Mathlib.Tactic.ByContra
 
 namespace Course21355
 

@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Order.Atoms
+import Mathlib.Order.BooleanAlgebra.Basic
 
 namespace Course21373
 

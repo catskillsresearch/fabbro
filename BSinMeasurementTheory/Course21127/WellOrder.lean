@@ -1,4 +1,8 @@
-import Mathlib
+import Mathlib.Algebra.Order.Ring.Unbundled.Rat
+import Mathlib.Data.Rat.Defs
+import Mathlib.Data.Set.Finite.Basic
+import Mathlib.Order.Interval.Set.Basic
+import Mathlib.Order.WellFounded
 
 namespace Course21127
 

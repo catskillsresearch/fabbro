@@ -1,4 +1,4 @@
-import Mathlib
+import Mathlib.Data.Rat.Defs
 import BSinMeasurementTheory.Course21120.TaylorEstimate
 import BSinMeasurementTheory.Course21120.TaylorError
 
