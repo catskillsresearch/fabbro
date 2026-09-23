@@ -14,7 +14,7 @@ theorem summary_terms :
 
 /-- Exact rational value of the degree-9 truncation. -/
 theorem summary_exact : T9 (1 / 2) = 34997 / 967680 :=
-  T9_half_eq
+  T9_half_exact
 
 /-- The truncation rounds to four decimals as \(0.0362\). -/
 theorem summary_rounding :
