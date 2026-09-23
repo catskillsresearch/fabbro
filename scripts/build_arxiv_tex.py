@@ -359,8 +359,9 @@ def replace_fences(
             figure_idx += 1
             other_idx += 1
             cap = escape_latex_caption(caption)
-            # Keep per-solution module maps under the Solution heading.
-            placement = "H" if "Solution modules" in body else "htbp"
+            # Keep syllabus Figure 1 (and every other mermaid) from floating
+            # past the next heading; solution maps stay under Solution.
+            placement = "H"
             placeholders[key] = (
                 f"\\begin{{figure}}[{placement}]\n\\centering\n"
                 f"{figure_include_latex(rel_path, hotspots)}"

@@ -6,8 +6,6 @@ import Mathlib.Order.Heyting.Basic
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 /-- Ultrafilters on a Boolean algebra, as used for the Stone space. -/
 structure IsUltrafilter {B : Type*} [BooleanAlgebra B] (U : Set B) : Prop where
   mem_top : ⊤ ∈ U
@@ -55,7 +53,5 @@ theorem stoneClopen_compl {B : Type*} [BooleanAlgebra B] (a : B) :
     rcases U.2.mem_or a with ha | hc
     · exact (h ha).elim
     · exact hc
-
-end ScottMeasurementTheory
 
 end Course21410

@@ -1,4 +1,4 @@
-import BSinMeasurementTheory.Course21120FTC
+import BSinMeasurementTheory.Course21120.FTC
 import BSinMeasurementTheory.Course21120.Existence
 import BSinMeasurementTheory.Course21120.TailBound
 import BSinMeasurementTheory.Course21120.TaylorExpansion

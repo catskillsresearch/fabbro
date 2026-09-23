@@ -6,3 +6,4 @@ import BSinMeasurementTheory.Course21292.DualFormulation
 import BSinMeasurementTheory.Course21292.Simplex
 import BSinMeasurementTheory.Course21292.Instance
 import BSinMeasurementTheory.Course21292.Scott11
+import BSinMeasurementTheory.Course21292.Numerical

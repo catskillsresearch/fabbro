@@ -15,13 +15,9 @@ PHASES: list[tuple[str, str, list[tuple[str, list[str]]]]] = [
         "Phase 1: Language and linear structure",
         "Calculus, proof language, dual bases, and combinatorial cancellation.",
         [
-            ("21-120-21-122.md", [
-                "BSinMeasurementTheory/Course21120.lean",
-                "BSinMeasurementTheory/Course21120FTC.lean",
-                "BSinMeasurementTheory/Course21120Taylor.lean",
-            ]),
+            ("21-120-21-122.md", ["BSinMeasurementTheory/Course21120.lean"]),
             ("21-127.md", ["BSinMeasurementTheory/Course21127.lean"]),
-            ("21-241.md", ["BSinMeasurementTheory/Course21241.lean", "BSinMeasurementTheory/Course21241Numerical.lean"]),
+            ("21-241.md", ["BSinMeasurementTheory/Course21241.lean"]),
             ("21-228.md", ["BSinMeasurementTheory/Course21228.lean"]),
         ],
     ),
@@ -29,30 +25,16 @@ PHASES: list[tuple[str, str, list[tuple[str, list[str]]]]] = [
         "Phase 2: Analysis, algebras, and formal proof",
         "Completeness, finite Boolean algebras, and Scott's Theorems 1.1--1.3 in Lean.",
         [
-            ("21-355.md", [
-                "BSinMeasurementTheory/Course21355.lean",
-                "BSinMeasurementTheory/Course21355/BolzanoWeierstrass.lean",
-                "BSinMeasurementTheory/Course21355/LimsupLiminf.lean",
-                "BSinMeasurementTheory/Course21355/AltSeq.lean",
-                "BSinMeasurementTheory/Course21355/CompactIcc.lean",
-                "BSinMeasurementTheory/Course21355/Numerical.lean",
-            ]),
-            ("21-373.md", ["BSinMeasurementTheory/Course21373.lean", "BSinMeasurementTheory/Course21373Numerical.lean"]),
-            ("21-321.md", [
-                "BSinMeasurementTheory/Course21321.lean",
-                "BSinMeasurementTheory/Course21321/ScottPair.lean",
-                "BSinMeasurementTheory/Course21321/Theorem11.lean",
-                "BSinMeasurementTheory/Course21321/Theorem12.lean",
-                "BSinMeasurementTheory/Course21321/Theorem13.lean",
-                "BSinMeasurementTheory/Course21321/Kraft.lean",
-            ]),
+            ("21-355.md", ["BSinMeasurementTheory/Course21355.lean"]),
+            ("21-373.md", ["BSinMeasurementTheory/Course21373.lean"]),
+            ("21-321.md", ["BSinMeasurementTheory/Course21321.lean"]),
         ],
     ),
     (
         "Phase 3: Duality and set theory",
         "Linear-programming duality and the ultrafilter engine of the infinite case.",
         [
-            ("21-292.md", ["BSinMeasurementTheory/Course21292.lean", "BSinMeasurementTheory/Course21292Numerical.lean"]),
+            ("21-292.md", ["BSinMeasurementTheory/Course21292.lean"]),
             ("21-329.md", ["BSinMeasurementTheory/Course21329.lean"]),
         ],
     ),
@@ -198,7 +180,7 @@ def _looks_like_identifier(text: str) -> bool:
 
 # Path-keyed first, then basename. Used when module comments are headings or fragments.
 FILE_BLURBS: dict[str, str] = {
-    "BSinMeasurementTheory/Course21120FTC.lean":
+    "BSinMeasurementTheory/Course21120/FTC.lean":
         "Fundamental theorem of calculus for the Fresnel-type integrand.",
     "BSinMeasurementTheory/Course21120/Existence.lean":
         "Comparison bound that gives absolute convergence of the improper integral.",
@@ -264,8 +246,6 @@ FILE_BLURBS: dict[str, str] = {
         "The restricted functional is a monotone assignment on B.",
     "BSinMeasurementTheory/Course21410/Formalization.lean":
         "Umbrella importer for the infinite-algebra extension modules.",
-    "BSinMeasurementTheory/Course21120Taylor.lean":
-        "Umbrella importer for the Taylor-expansion modules.",
     "BSinMeasurementTheory/Course21241/PointV.lean":
         "A concrete point v outside the non-negative orthant.",
     "BSinMeasurementTheory/Course21241/SeparatingU.lean":
@@ -318,7 +298,7 @@ FILE_BLURBS: dict[str, str] = {
         "Inequality-form linear programs over the rationals.",
     "BSinMeasurementTheory/Course21292/WeakDuality.lean":
         "Weak duality for a primal/dual linear program.",
-    "BSinMeasurementTheory/Course21292Numerical.lean":
+    "BSinMeasurementTheory/Course21292/Numerical.lean":
         "Numerical checks of the four calculations in the 21-292 example.",
     "BSinMeasurementTheory/Course21321/Kraft.lean":
         "Kraft difference vectors as a ScottPair with a cancellation witness.",
@@ -366,7 +346,7 @@ FILE_BLURBS: dict[str, str] = {
         "Atoms in a Boolean algebra.",
     "BSinMeasurementTheory/Course21373/Representation.lean":
         "Canonical representation of an element as the join of the atoms below it.",
-    "BSinMeasurementTheory/Course21373Numerical.lean":
+    "BSinMeasurementTheory/Course21373/Numerical.lean":
         "Numerical example for the finite Boolean-algebra representation.",
     "BSinMeasurementTheory/Course21410/Glue.lean":
         "Glue lemmas: inclusion-exclusion, monotonicity, and preference preservation.",

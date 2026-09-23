@@ -5,8 +5,6 @@ import BSinMeasurementTheory.Course21410.StoneSpace
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 variable {B : Type*} [BooleanAlgebra B]
 
 open scoped Classical
@@ -31,7 +29,5 @@ theorem stoneIndicator_nonneg (a : B) : stoneIndicator a ∈ NonnegCone := by
 theorem preferenceDiff_apply (a b : B) (U : Stone B) :
     preferenceDiff a b U = stoneIndicator b U - stoneIndicator a U :=
   rfl
-
-end ScottMeasurementTheory
 
 end Course21410

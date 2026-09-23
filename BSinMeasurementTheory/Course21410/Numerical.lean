@@ -9,8 +9,6 @@ open scoped BigOperators Classical
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 def w4 : Fin 4 → ℝ
   | 0 => 0.1
   | 1 => 0.2
@@ -59,7 +57,5 @@ theorem example_inclusion_exclusion :
     μ4.prob (setA ∪ setB) + μ4.prob (setA ∩ setB) = μ4.prob setA + μ4.prob setB := by
   rw [example_prob_union, example_prob_inter, example_probA, example_probB]
   norm_num
-
-end ScottMeasurementTheory
 
 end Course21410

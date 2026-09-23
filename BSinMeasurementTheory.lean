@@ -1,17 +1,13 @@
 import BSinMeasurementTheory.Course21120
-import BSinMeasurementTheory.Course21120FTC
-import BSinMeasurementTheory.Course21120Taylor
 import BSinMeasurementTheory.Course21127
 import BSinMeasurementTheory.Course21228
 import BSinMeasurementTheory.Course21241
 import BSinMeasurementTheory.Course21292
-import BSinMeasurementTheory.Course21292Numerical
 import BSinMeasurementTheory.Course21321
 import BSinMeasurementTheory.Course21322
 import BSinMeasurementTheory.Course21329
 import BSinMeasurementTheory.Course21355
 import BSinMeasurementTheory.Course21373
-import BSinMeasurementTheory.Course21373Numerical
 import BSinMeasurementTheory.Course21410
 import BSinMeasurementTheory.Course21640
 import BSinMeasurementTheory.Course21651

@@ -4,8 +4,6 @@ import BSinMeasurementTheory.Course21410.PositiveExtension
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 variable {B : Type*} [BooleanAlgebra B]
 
 /-- Restriction of a Stone-space functional back to \(B\). -/
@@ -31,7 +29,5 @@ theorem restrict_mono (Λ : StoneFunctional B) {R : B → B → Prop}
   have := hR a b hab
   dsimp [restrictToB, preferenceDiff] at this ⊢
   simpa [map_sub, sub_nonneg] using this
-
-end ScottMeasurementTheory
 
 end Course21410

@@ -5,8 +5,6 @@ import BSinMeasurementTheory.Course21410.StepFunctions
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 variable {B : Type*} [BooleanAlgebra B]
 
 /-- A linear functional on functions on the Stone space. -/
@@ -24,7 +22,5 @@ def AgreesWith (Λ : StoneFunctional B) (R : B → B → Prop) : Prop :=
 theorem positive_on_indicators (Λ : StoneFunctional B) (hpos : IsPositive Λ) (a : B) :
     0 ≤ Λ (stoneIndicator a) :=
   hpos _ (stoneIndicator_nonneg a)
-
-end ScottMeasurementTheory
 
 end Course21410

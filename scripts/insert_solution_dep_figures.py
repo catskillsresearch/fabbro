@@ -12,24 +12,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 COURSE_LEANS: list[tuple[str, str, list[str]]] = [
-    ("21-120-21-122.md", "21-120 / 21-122", [
-        "BSinMeasurementTheory/Course21120FTC.lean",
-        "BSinMeasurementTheory/Course21120.lean",
-        "BSinMeasurementTheory/Course21120Taylor.lean",
-    ]),
+    ("21-120-21-122.md", "21-120 / 21-122", ["BSinMeasurementTheory/Course21120.lean"]),
     ("21-127.md", "21-127", ["BSinMeasurementTheory/Course21127.lean"]),
     ("21-241.md", "21-241", ["BSinMeasurementTheory/Course21241.lean"]),
     ("21-228.md", "21-228", ["BSinMeasurementTheory/Course21228.lean"]),
     ("21-355.md", "21-355", ["BSinMeasurementTheory/Course21355.lean"]),
-    ("21-373.md", "21-373", [
-        "BSinMeasurementTheory/Course21373.lean",
-        "BSinMeasurementTheory/Course21373Numerical.lean",
-    ]),
+    ("21-373.md", "21-373", ["BSinMeasurementTheory/Course21373.lean"]),
     ("21-321.md", "21-321", ["BSinMeasurementTheory/Course21321.lean"]),
-    ("21-292.md", "21-292", [
-        "BSinMeasurementTheory/Course21292.lean",
-        "BSinMeasurementTheory/Course21292Numerical.lean",
-    ]),
+    ("21-292.md", "21-292", ["BSinMeasurementTheory/Course21292.lean"]),
     ("21-329.md", "21-329", ["BSinMeasurementTheory/Course21329.lean"]),
     ("21-651.md", "21-651", ["BSinMeasurementTheory/Course21651.lean"]),
     ("21-720.md", "21-720", ["BSinMeasurementTheory/Course21720.lean"]),

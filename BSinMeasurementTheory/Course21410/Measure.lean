@@ -12,8 +12,6 @@ open scoped BigOperators Classical
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 /-- A finitely additive probability measure on subsets of a finite space `α`. -/
 structure FinitelyAdditiveMeasure (α : Type*) [Fintype α] where
   prob : Set α → ℝ
@@ -55,7 +53,5 @@ noncomputable def measureOfWeights {α : Type*} [Fintype α]
           · exact hB h2
         split_ifs
         ring
-
-end ScottMeasurementTheory
 
 end Course21410

@@ -13,8 +13,6 @@ open scoped BigOperators Classical
 
 namespace Course21410
 
-namespace ScottMeasurementTheory
-
 /-- GLUE LEMMA 1: Inclusion-exclusion for finitely additive measures. -/
 theorem measure_union {α : Type*} [Fintype α]
     (μ : FinitelyAdditiveMeasure α) (A B : Set α) :
@@ -83,7 +81,5 @@ theorem qualitative_agreement {α : Type*} [Fintype α]
     (measureOfWeights w hw_nonneg hw_sum).prob A ≤ (measureOfWeights w hw_nonneg hw_sum).prob B := by
   dsimp [measureOfWeights]
   linarith
-
-end ScottMeasurementTheory
 
 end Course21410
