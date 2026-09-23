@@ -11,7 +11,7 @@ theorem term4_eq : 5 * (1 / 2 : ℚ) ^ 9 / 54 = 5 / 27648 := by norm_num
 
 /-- The exact rational value of $T_9(1/2)$ is $34997 / 967680$. -/
 theorem T9_half_eq : T9 (1 / 2) = 34997 / 967680 := by
-  dsimp [T9]
+  rw [T9_simplified]
   norm_num
 
 /-- $T_9(1/2)$ lies strictly between $0.03615$ and $0.03625$. -/
