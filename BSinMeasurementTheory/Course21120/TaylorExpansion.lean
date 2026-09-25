@@ -12,8 +12,20 @@ multiply through degree $8$, then integrate term by term. -/
 /-- Truncation of $\sin(t^2) = t^2 - t^6/6 + O(t^{10})$. -/
 def sinTrunc (t : ℚ) : ℚ := t ^ 2 - t ^ 6 / 6
 
+/-- Next term in $\sin(t^2)$ after `sinTrunc`: $t^{10}/120$. -/
+def sinNextTerm (t : ℚ) : ℚ := t ^ 10 / 120
+
+/-- Sin truncation through the $t^{10}$ term. -/
+def sinTrunc10 (t : ℚ) : ℚ := sinTrunc t + sinNextTerm t
+
 /-- Truncation of $1/(1+t^2) = 1 - t^2 + t^4 - t^6 + O(t^8)$. -/
 def geomTrunc (t : ℚ) : ℚ := 1 - t ^ 2 + t ^ 4 - t ^ 6
+
+/-- Next geometric term after `geomTrunc`: $t^8$. -/
+def geomNextTerm (t : ℚ) : ℚ := t ^ 8
+
+/-- Geometric truncation through degree $8$. -/
+def geomTrunc8 (t : ℚ) : ℚ := geomTrunc t + geomNextTerm t
 
 /-- Exact product of the two factor truncations (still includes degree $\ge 10$). -/
 def productExact (t : ℚ) : ℚ := sinTrunc t * geomTrunc t

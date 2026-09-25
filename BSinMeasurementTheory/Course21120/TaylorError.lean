@@ -7,21 +7,8 @@ namespace Course21120Taylor
 
 /-! ### Integrand truncation error from the series
 
-Pull the factor truncations from `TaylorExpansion`, extend them by the
-next terms that produce degree $10$, extract the $t^{10}$ coefficient, and
-integrate the resulting bound. -/
-
-/-- Next term in $\sin(t^2)$ after `sinTrunc`: $t^{10}/120$. -/
-def sinNextTerm (t : ℚ) : ℚ := t ^ 10 / 120
-
-/-- Sin truncation through the $t^{10}$ term from the English expansion. -/
-def sinTrunc10 (t : ℚ) : ℚ := sinTrunc t + sinNextTerm t
-
-/-- Next geometric term after `geomTrunc`: $t^8$. -/
-def geomNextTerm (t : ℚ) : ℚ := t ^ 8
-
-/-- Geometric truncation through degree $8$. -/
-def geomTrunc8 (t : ℚ) : ℚ := geomTrunc t + geomNextTerm t
+Using `sinTrunc10` and `geomTrunc8` from `TaylorExpansion`, extract the
+$t^{10}$ coefficient and integrate the resulting bound. -/
 
 /-- The three contributions to the $t^{10}$ coefficient in
 $\mathrm{sinTrunc10}\cdot\mathrm{geomTrunc8}$:
