@@ -482,7 +482,7 @@ def build_title_page(abstract_latex: str) -> str:
         \\maketitle
 
         \\begin{{abstract}}
-        {abstract_latex.strip()}
+        {abstract_latex.strip()} Sources: \\url{{{GITHUB_URL}}}.
         \\end{{abstract}}
 
         \\noindent\\textbf{{Keywords.}} Lean 4; formal verification; measurement theory;
