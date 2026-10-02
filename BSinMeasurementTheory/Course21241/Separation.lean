@@ -4,7 +4,7 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Module.LinearMap.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith

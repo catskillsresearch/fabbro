@@ -1,0 +1,23 @@
+name = "Fabbro_Course21640"
+version = "0.1.0"
+keywords = ["measurement-theory", "scott-1964", "lean4", "palomar-preflight"]
+defaultTargets = ["Challenge", "Solution"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[require]]
+name = "BSinMeasurementTheory"
+path = "../.."
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"

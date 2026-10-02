@@ -1,0 +1,21 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21410.representation_on_B"
+  ],
+  "definition_names": [
+    "Course21410.Stone",
+    "Course21410.stoneIndicator",
+    "Course21410.preferenceDiff",
+    "Course21410.StoneFunctional",
+    "Course21410.IsPositive",
+    "Course21410.AgreesWith",
+    "Course21410.restrictToB"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

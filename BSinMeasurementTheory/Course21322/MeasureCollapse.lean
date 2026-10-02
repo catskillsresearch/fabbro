@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import BSinMeasurementTheory.Course21322.StoneClopen
 
 open scoped BigOperators Classical

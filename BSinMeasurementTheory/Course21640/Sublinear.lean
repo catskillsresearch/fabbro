@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Module.Basic
 import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 namespace Course21640
 

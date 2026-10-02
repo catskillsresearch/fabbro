@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21651.StoneRepresentation.stoneMap_top",
+    "Course21651.StoneRepresentation.isClopen_stoneMap"
+  ],
+  "definition_names": [
+    "Course21651.StoneRepresentation.StoneSpace",
+    "Course21651.StoneRepresentation.stoneMap"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

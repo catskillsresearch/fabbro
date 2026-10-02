@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Module.LinearMap.Basic
 import Mathlib.Algebra.Module.Prod
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 

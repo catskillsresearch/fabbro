@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Fabbro Course21720 — 21-720 Measure and Integration"
+  description: >-
+    Lean 4 / Mathlib formalization of the 21-720 Measure and Integration capstone from the
+    fabbro BS-in-Measurement-Theory curriculum. Monotonicity comparison for positive linear functionals on C(X,R), the Riesz comparison step.
+    Drafted with AI-agent assistance under Lars Warren Ericson's direction
+    and review. This surface is for local Palomar preflight only and is NOT
+    a Palomar registry submission; see PROVENANCE.md.
+  authors:
+    - "Lars Warren Ericson"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Lars Warren Ericson"
+
+repository:
+  role: substantive-development
+
+classification:
+  arxiv: [cs.LO, math.LO]
+  msc2020: ["91C05", "68V20"]
+
+status:
+  scope: >-
+    Sorry-free course development under BSinMeasurementTheory/Course21720/.
+    Challenge.lean holds deliberate Palomar proof holes; Solution.lean
+    re-exports the course theorems. This packaging is for local / CI
+    Palomar preflight only — not a registry submission.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - "Course21720.riesz_comparison"
+
+fidelity:
+  divergences: >-
+    Curriculum restatement of a CMU 21-xxx style capstone oriented toward
+    Scott (1964) measurement theorems. Exact statement concordance lives in
+    courses/ and arxiv.md; this surface compares only the listed headline
+    theorems.
+
+sources:
+  - title: "21-720 Measure and Integration course notes"
+    authors: ["Lars Warren Ericson"]
+    type: "notes"
+    location: "courses/21-720.md"
+    relationship: formalizes
+    note: >-
+      English solution / problem statement for this course capstone inside
+      the fabbro curriculum.
+  - title: "Measurement Structures and Linear Inequalities"
+    authors: ["Dana S. Scott"]
+    type: "paper"
+    location: >-
+      Journal of Mathematical Psychology, Volume 1, 1964, pages 233-247.
+    relationship: background
+    note: >-
+      Capstone source motivating the BS-in-Measurement-Theory sequence.
+      This surface is curriculum packaging for preflight, not a Scott-paper
+      registry submission (see scott1964).
+
+alignment:
+  note: >-
+    Local Palomar preflight surface only. Do not treat as a Palomar registry
+    submission package.

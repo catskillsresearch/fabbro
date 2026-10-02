@@ -5,7 +5,6 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 TEX="arxiv.tex"
-CMU_STYLE="cmu-titlepage2.sty"
 LISTINGS_DIR="lean-listings"
 FIGURES_DIR="figures"
 OUT_DIR="dist"
@@ -18,7 +17,7 @@ fi
 mapfile -t FIGURE_PNGS < <(find "$FIGURES_DIR" -maxdepth 1 -name '*.png' 2>/dev/null | sort)
 
 missing=0
-for f in "$TEX" "$CMU_STYLE"; do
+for f in "$TEX"; do
   if [[ ! -f "$f" ]]; then
     echo "error: missing $f" >&2
     missing=1
@@ -45,7 +44,6 @@ from pathlib import Path
 
 sources = [
     {"filename": "arxiv.tex", "usage": "toplevel"},
-    {"filename": "cmu-titlepage2.sty", "usage": "include"},
 ]
 for path in sorted(p for p in Path("lean-listings").iterdir() if p.is_file()):
     sources.append({"filename": path.as_posix(), "usage": "include"})
@@ -55,5 +53,5 @@ Path("00README.json").write_text(json.dumps({"process": {"compiler": "pdflatex"}
 print(f"  {len(sources)} sources")
 PY
 
-zip -r "$ZIP" 00README.json "$TEX" "$CMU_STYLE" "$LISTINGS_DIR" "${FIGURE_PNGS[@]}"
+zip -r "$ZIP" 00README.json "$TEX" "$LISTINGS_DIR" "${FIGURE_PNGS[@]}"
 echo "wrote $ZIP ($(du -h "$ZIP" | cut -f1))"

@@ -1,0 +1,16 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21329.ultrafilter_extension",
+    "Course21329.stoneSpace_nonempty"
+  ],
+  "definition_names": [
+    "Course21329.topFilter"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

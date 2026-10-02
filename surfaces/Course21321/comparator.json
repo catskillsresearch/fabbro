@@ -1,0 +1,20 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21321.SeparatingFunctional.noCancellation",
+    "Course21321.KraftPair.not_separable"
+  ],
+  "definition_names": [
+    "Course21321.y1",
+    "Course21321.y2",
+    "Course21321.y3",
+    "Course21321.y4",
+    "Course21321.KraftPair"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

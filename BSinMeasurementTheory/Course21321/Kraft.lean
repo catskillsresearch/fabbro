@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum

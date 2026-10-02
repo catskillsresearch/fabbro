@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21355.limsup_liminf_exist",
+    "Course21355.compact_Icc"
+  ],
+  "definition_names": [
+    "Course21355.tailSup",
+    "Course21355.tailInf"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

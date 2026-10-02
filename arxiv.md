@@ -22,7 +22,7 @@ and proved end to end. Each course contributes one
 problem that requires the full toolkit of that course rather than a single
 technique in isolation. Solutions are written in English and then formalized
 in Lean 4 / Mathlib. The accompanying library `BSinMeasurementTheory` is
-sorry-free under the pinned toolchain `leanprover/lean4:v4.34.0-rc1` and
+sorry-free under the pinned toolchain `leanprover/lean4:v4.35.0-rc3` and
 introduces no project axioms beyond Mathlib's classical footprint. Large-language-model
 assistance was used in drafting solutions, but every accepted declaration is
 checked by Lean's kernel. The complete source and a reproducible build

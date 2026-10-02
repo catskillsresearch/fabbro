@@ -18,7 +18,7 @@ The student of record for the problem set is Giovanni Fabbro. The capstone
 source is Dana S. Scott, *Measurement Structures and Linear Inequalities*
 (J. Math. Psychology 1 (1964), 233–247).
 
-The pin is `leanprover/lean4:v4.34.0-rc1`.
+The pin is `leanprover/lean4:v4.35.0-rc3`.
 
 ## Report and archival files
 
@@ -30,6 +30,26 @@ The pin is `leanprover/lean4:v4.34.0-rc1`.
 | `courses/` | Per-course English solutions |
 | `BSinMeasurementTheory/` | Sorry-free Lean 4 formalizations |
 | `BSinMeasurementTheory.lean` | Root importer |
+| `surfaces/` | One Palomar Challenge/Solution package per course (preflight only) |
+
+## Palomar preflight (surfaces)
+
+Each course has a Palomar-style front under `surfaces/CourseXXXXX/`
+(`Challenge.lean` holes + `Solution.lean` import). These packages are for
+**local / CI mechanical preflight only** — they are **not** submitted to the
+Palomar registry (that role belongs to
+[`scott1964`](https://github.com/catskillsresearch/scott1964)).
+
+```bash
+# build one surface
+cd surfaces/Course21127 && lake update && lake build Challenge Solution
+
+# mechanical preflight for all surfaces (requires ../palomar-preflight)
+bash scripts/palomar_preflight.sh --mechanical-only
+```
+
+See [`surfaces/README.md`](surfaces/README.md) and
+[`docs/PALOMAR_EDITORIAL_AUDIT.md`](docs/PALOMAR_EDITORIAL_AUDIT.md).
 
 ## Syllabus
 
@@ -241,5 +261,5 @@ bash scripts/build_arxiv_pdf.sh
 ```
 
 `lake build` typechecks `BSinMeasurementTheory`. The PDF script regenerates
-`arxiv.tex` from `arxiv.md` and the course notes, compiles the CMU report
-cover, and writes `dist/arxiv_submit.zip`.
+`arxiv.tex` from `arxiv.md` and the course notes, compiles the report
+with a standard article title page, and writes `dist/arxiv_submit.zip`.

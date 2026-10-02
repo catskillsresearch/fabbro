@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import BSinMeasurementTheory.Course21640.Sublinear

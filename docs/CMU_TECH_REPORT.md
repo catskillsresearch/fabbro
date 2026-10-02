@@ -26,16 +26,15 @@ bash scripts/build_arxiv_pdf.sh
 
 The build produces:
 
-- `arxiv.pdf` — CMU-formatted report PDF;
+- `arxiv.pdf` — report PDF;
 - `arxiv.tex` — generated complete LaTeX source (gitignored);
 - `lean-listings/` — generated report inputs (gitignored);
 - `figures/` — live Mermaid diagrams rendered to PNG (gitignored; never PDF);
 - `dist/arxiv_submit.zip` — pdfLaTeX-ready cross-archive bundle, including
-  `cmu-titlepage2.sty` and `figures/*.png`.
+  `figures/*.png`.
 
-The title page uses the report-mode layout from CMU's
-`cmu-titlepage2.sty`. The same generated document is intended for the CMU
-series and arXiv cross-archive.
+The title page is a standard `article` `\maketitle` followed by the abstract,
+matching the layout of `qlambda/arxiv.pdf`.
 
 ## Before public release
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert arxiv_with_code.md to a CMU SCS technical report.
+"""Convert arxiv_with_code.md to the report PDF.
 
 Mermaid fences are rendered live to PNG via mermaid-cli (mmdc), never PDF.
 """
@@ -29,8 +29,10 @@ PUPPETEER_CONFIG = SCRIPTS / "puppeteer-config.json"
 LISTING_CHUNK_LINES = 400
 
 GITHUB_URL = r"https://github.com/catskillsresearch/fabbro"
-REPORT_NUMBER = "CMU-CS-26-XXX"
 REPORT_DATE = "September 2026"
+EMAIL = "lars.ericson@catskillsresearch.com"
+ORCID = "0000-0001-8299-9361"
+COMPANY = "Catskills Research Company"
 
 # Mermaid course node id -> pandoc hypertarget for that course subsection.
 COURSE_ANCHORS = {
@@ -454,33 +456,22 @@ def cleanup_abstract_latex(latex: str) -> str:
 
 
 def build_title_page(abstract_latex: str) -> str:
-    github_latex = rf"\url{{{GITHUB_URL}}}"
-    pdf_subject = (
-        f"Carnegie Mellon University School of Computer Science Technical Report {REPORT_NUMBER}"
-    )
     return textwrap.dedent(
         f"""
         \\title{{{TITLE}}}
 
         \\author{{
-          Lars Warren Ericson \\\\
-          {{\\normalfont\\small Catskills Research Company}}
+          Lars Warren Ericson\\\\
+          Independent researcher, d/b/a {COMPANY}\\\\
+          \\texttt{{{EMAIL}}}\\\\
+          ORCID {ORCID}
         }}
-
         \\date{{{REPORT_DATE}}}
-        \\trnumber{{{REPORT_NUMBER}}}
-        \\keywords{{Lean 4; formal verification; measurement theory; undergraduate curriculum;
-          Scott 1964; Boolean algebras; Stone spaces}}
-        \\citationinfo{{Source repository: {github_latex}}}
-        \\copyrightnotice{{Copyright \\copyright\\ 2026 Lars Warren Ericson}}
-        \\abstract{{
-        {abstract_latex.strip()}
-        }}
         \\hypersetup{{
           pdftitle={{{TITLE}}},
           pdfauthor={{Lars Warren Ericson}},
-          pdfsubject={{{pdf_subject}}},
-          pdfkeywords={{Lean 4, formal verification, measurement theory, undergraduate curriculum}}
+          pdfsubject={{Formalization of a reconstructed measurement-theory curriculum in Lean 4}},
+          pdfkeywords={{Lean 4, formal verification, measurement theory, Scott 1964}}
         }}
 
         \\setcounter{{secnumdepth}}{{5}}
@@ -489,9 +480,18 @@ def build_title_page(abstract_latex: str) -> str:
         \\begin{{document}}
 
         \\maketitle
-        \\tableofcontents
+
+        \\begin{{abstract}}
+        {abstract_latex.strip()}
+        \\end{{abstract}}
+
+        \\noindent\\textbf{{Keywords.}} Lean 4; formal verification; measurement theory;
+        undergraduate curriculum; Scott 1964; Boolean algebras; Stone spaces.
+
         \\clearpage
+        \\tableofcontents
         \\listoffigures
+        \\clearpage
         """
     ).strip()
 

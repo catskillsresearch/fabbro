@@ -1,0 +1,19 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21127.toRatQuot_bijective",
+    "Course21127.false_claim_is_false"
+  ],
+  "definition_names": [
+    "Course21127.Rel",
+    "Course21127.toRat",
+    "Course21127.toRatQuot",
+    "Course21127.FalseClaim"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,7 +1,7 @@
 import Mathlib.Algebra.Module.Basic
 import Mathlib.Algebra.Module.LinearMap.Basic
 import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Linarith
 import BSinMeasurementTheory.Course21640.Sublinear

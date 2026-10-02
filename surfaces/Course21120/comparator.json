@@ -1,0 +1,19 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21120FTC.part_a_deriv",
+    "Course21120.limAbsBound_one",
+    "Course21120Taylor.truncation_error_lt"
+  ],
+  "definition_names": [
+    "Course21120FTC.f",
+    "Course21120.limAbsBound",
+    "Course21120Taylor.truncation_error"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

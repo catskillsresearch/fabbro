@@ -1,0 +1,20 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21322.FiniteStoneCollapse.stone_measure_eq_atomic_measure"
+  ],
+  "definition_names": [
+    "Course21322.FiniteStoneCollapse.StoneSpace",
+    "Course21322.FiniteStoneCollapse.principalHom",
+    "Course21322.FiniteStoneCollapse.atomToStone",
+    "Course21322.FiniteStoneCollapse.stoneMap",
+    "Course21322.FiniteStoneCollapse.stoneMeasure",
+    "Course21322.FiniteStoneCollapse.atomicMeasure"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

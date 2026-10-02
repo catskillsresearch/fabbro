@@ -1,0 +1,20 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21292.LPDuality.strong_duality_of_equal_value",
+    "Course21292.LPDuality.scott11_no_witness_of_feasible"
+  ],
+  "definition_names": [
+    "Course21292.LPDuality.dot",
+    "Course21292.LPDuality.matMulVec",
+    "Course21292.LPDuality.matTransposeMulVec",
+    "Course21292.LPDuality.ScottPrimalFeasible",
+    "Course21292.LPDuality.ScottDualWitness"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,5 +1,5 @@
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 
 namespace Course21355

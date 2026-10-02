@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21241.e_linearIndependent"
+  ],
+  "definition_names": [
+    "Course21241.V",
+    "Course21241.C",
+    "Course21241.e"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

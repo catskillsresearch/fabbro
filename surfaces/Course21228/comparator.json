@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Course21228.symmetric_depends_only_on_multiset",
+    "Course21228.validPairs_card"
+  ],
+  "definition_names": [
+    "Course21228.ValidPair",
+    "Course21228.PairwiseDistinct",
+    "Course21228.MultisetCompatible"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
